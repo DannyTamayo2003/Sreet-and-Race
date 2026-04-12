@@ -1,16 +1,17 @@
 .create-event-form {
-  max-width: 900px; /* aumentato per desktop */
+  max-width: 800px;
   width: 98vw;
-  margin: 48px auto;
+  margin: 24px auto;
   background: rgba(24,24,24,0.92);
   border-radius: 18px;
   box-shadow: 0 4px 24px rgba(60,0,255,0.10);
-  padding: 48px 48px 40px 48px;
+  padding: 20px 16px 16px 16px;
   font-family: 'Orbitron', 'Arial Black', Arial, sans-serif;
   color: #fff;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 10px;
+
 }
 
 .create-event-form h2 {
@@ -32,21 +33,20 @@
   font-size: 1.08rem;
   color: #fff200;
   font-weight: 600;
-  margin-bottom: 6px;
+  margin-bottom: 2px;
   letter-spacing: 0.01em;
   align-items: flex-start;
 }
 
 .create-event-form input,
 .create-event-form textarea {
-  margin-top: 6px;
-  margin-bottom: 12px;
-  padding: 10px 12px;
+  margin-bottom: 4px;
+  padding: 5px 7px;
   border-radius: 8px;
   border: none;
   background: #232323;
   color: #fff;
-  font-size: 1rem;
+  font-size: 0.92rem;    /* riduci la dimensione del testo */
   font-family: inherit;
   box-shadow: 0 2px 8px rgba(60,0,255,0.05);
   outline: none;
@@ -56,7 +56,7 @@
 /* Input normali più stretti */
 .create-event-form input[type="text"],
 .create-event-form input[type="date"] {
-  width: 320px;
+  width: 220px;
   max-width: 100%;
   min-width: 180px;
 }
@@ -65,13 +65,13 @@
 .create-event-form textarea {
   width: 100%;
   min-width: 320px;
-  min-height: 90px;
+  min-height: 50px;
   resize: vertical;
 }
 
 /* Rendi la textarea descrizione dettagliata più alta */
 .create-event-form textarea[name="descrizioneDettagliata"] {
-  min-height: 160px;
+  min-height: 90px;
 }
 
 .create-event-form input:focus,
@@ -122,8 +122,8 @@
 
 .wide-input {
   width: 60%;
-  min-width: 260px;
-  max-width: 500px;
+  min-width: 180px;
+  max-width: 350px;
   margin: 0 auto;
   display: block;
 }
@@ -131,8 +131,8 @@
 .event-form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 18px 32px;
-  margin: 18px 0;
+  gap: 10px 18px;
+  margin: 10px 0;
 }
 
 .event-form-grid label {
@@ -164,25 +164,6 @@
 /* Responsive per mobile */
 @media (max-width: 900px) {
   .create-event-form {
-    max-width: 98vw;
-    padding: 18px 2vw 18px 2vw;
-  }
-  .wide-input {
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-  }
-  .event-form-grid {
-    grid-template-columns: 1fr;
-    gap: 12px 0;
-  }
-}
-@media (max-width: 600px) {
-  .create-event-form {
-    max-width: 98vw;
-    padding: 14px 6px 10px 6px;
-  }
-  .create-event-form h2 {
-    font-size: 1.15rem;
+    padding: 10px 2vw 10px 2vw;
   }
 }

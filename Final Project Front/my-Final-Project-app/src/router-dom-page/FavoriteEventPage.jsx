@@ -38,6 +38,7 @@ export default function FavoriteEventPage() {
       .then(data => {
         // La tua API restituisce direttamente un array di eventi preferiti
         setFavoriteEvents(data);
+        console.log('Preferiti:', data); // <--- AGGIUNGI QUESTA RIGA
         setLoading(false);
       })
       .catch(err => {
@@ -53,14 +54,14 @@ export default function FavoriteEventPage() {
       return;
     }
 
-    // Assicurati che l'evento abbia un '_id' per la rimozione dal backend
+    // Se manca l'_id, rimuovi solo dalla UI
     if (!event._id) {
-      console.error('L\'evento non ha un _id valido per la rimozione dal backend:', event);
-      alert('Impossibile rimuovere l\'evento: ID non valido.');
+      setFavoriteEvents(prevEvents => prevEvents.filter(fav => fav !== event));
+      alert('Evento rimosso solo dalla lista locale (mancava l\'ID).');
       return;
     }
 
-    fetch(`http://localhost:3000/api/user/eventi/${event._id}/preferiti`, { // Modifica l'endpoint se necessario
+    fetch(`http://localhost:3000/api/user/eventi/${event._id}/preferiti`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -68,9 +69,8 @@ export default function FavoriteEventPage() {
       },
     })
       .then(res => {
-        if (res.ok) {
-          alert('Evento rimosso dai preferiti con successo!');
-          // Aggiorna lo stato rimuovendo l'evento eliminato
+        if (res.ok || res.status === 404) { // accetta anche 404 come successo
+          alert('Evento rimosso dai preferiti!');
           setFavoriteEvents(prevEvents => prevEvents.filter(fav => fav._id !== event._id));
         } else {
           return res.json().then(errData => {

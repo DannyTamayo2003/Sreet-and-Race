@@ -51,6 +51,7 @@ export default function EventDetailPage() {
       <div className="eventDetailContent">
         <h1 className="eventDetailTitle">{event.nome || event.nameEvent}</h1>
         <h3 className="eventDetailSubtitle">{event.descrizione || event.description}</h3>
+        
         <div className="eventDetailInfoList">
           {event.location && (
             <div className="eventDetailRow">
