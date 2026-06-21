@@ -19,13 +19,13 @@ Final-Project/
 │   └── index.js
 └── Final Project Front/my-Final-Project-app/
     └── src/
-        ├── components/   EventListComponent, EventCardComponent, EventDetailButton,
+        ├── components/   EventListComponent, EventCardComponent, DetailButtonComponent,
         │                 FavoriteButtonComponent, NavBarComponent, CreateEvent,
         │                 LoginUserComponent, RegistrationComponent, LogOutComponent,
-        │                 MockEventsComponent, FeaturedCardComponent
-        ├── router-dom-page/  HomePage, EventPage, EventDetailPage, FavoriteEventPage,
-        │                     LoginUserPage, RegistrationPage, CreateEventPage, AccountPage, ContactsPage
-        ├── mocks/        MockEvents.js (usato solo su HomePage)
+        │                 FeaturedCardComponent
+        ├── router-dom-page/  HomePage (landing page), EventPage, EventDetailPage,
+        │                     FavoriteEventPage, LoginUserPage, RegistrationPage,
+        │                     CreateEventPage, AccountPage, ContactsPage
         └── App.jsx
 ```
 
@@ -38,6 +38,13 @@ JWT_SECRET=chiave_segreta_min_32_chars
 PORT=3000
 ```
 
+## Auth — token JWT in localStorage
+
+Il token JWT viene salvato con la chiave `"token"` (non `"userId"`):
+- Salvato al login: `localStorage.setItem('token', data.token)`
+- Letto nelle richieste protette: `localStorage.getItem('token')`
+- Rimosso al logout: `localStorage.removeItem('token')`
+
 ## Branch di sviluppo
 
 - `danny` — branch principale di sviluppo (lavoro dal PC)
@@ -48,12 +55,16 @@ PORT=3000
 
 ## Stato attuale (giugno 2026)
 
-### Completato (fasi 1–6 del roadmap)
+### Completato (fasi 1–6 del roadmap + pulizia)
 - Auth: registrazione, login JWT, logout
-- CRUD eventi: crea (`POST /api/eventi/`), leggi tutti (`GET /api/eventi/`), leggi per ID (`GET /api/eventi/:id`)
-- Preferiti: aggiungi/rimuovi/leggi dal DB utente
+- CRUD eventi: crea, leggi tutti, leggi per ID
+- Preferiti: aggiungi/rimuovi/leggi dal DB (bug `.remove()` → `$pull` fixato)
 - Frontend: tutte le pagine principali funzionanti, filtro per nome/città su EventPage
-- Rimossa integrazione Eventbrite API (non esistono API affidabili per eventi auto in Italia)
+- Rimossa integrazione Eventbrite (non esistono API affidabili per eventi auto in Italia)
+- HomePage trasformata in landing page (rimossi mock events)
+- Rimossi: MockEvents.js, MockEventsComponent.jsx, codice commentato, console.log di debug
+- Commenti macro e micro aggiunti su tutto il codebase backend e frontend
+- Sintassi semplificata (function keyword, async/await puro)
 
 ### Endpoint API backend
 
@@ -69,11 +80,11 @@ PORT=3000
 | DELETE | /api/user/eventi/:id/preferiti | ✓ | Rimuovi preferito |
 
 ### TODO (prossimi step)
+- [ ] Google Auth (dipendenza da definire con l'utente) — sostituirà login/registrazione classici
 - [ ] Admin Dashboard (Fase 7): pannello per gestire eventi con ruoli utente
 - [ ] Edit/Delete eventi da parte del creatore (endpoint PUT/DELETE + UI)
-- [ ] Validazione form (Express Validator backend + validazione frontend)
+- [ ] Validazione form più robusta (Express Validator backend + validazione frontend)
 - [ ] Profilo utente (AccountPage mostra solo logout, aggiungere dati utente)
-- [ ] Sostituire mock events su HomePage con eventi reali dal DB
 - [ ] Paginazione lista eventi
 
 ## Come avviare il progetto
