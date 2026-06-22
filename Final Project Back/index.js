@@ -1,28 +1,41 @@
+/*
+ * index.js — Entry point del server
+ * Configura Express, connette MongoDB e registra le route dell'applicazione.
+ * Il server gira sulla porta 3000 (o quella definita in .env).
+ */
+
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const eventoRoutes = require('./routes/eventRoutes.js');
-const userRoutes = require('./routes/userRoutes.js')
+require('dotenv').config(); // Carica le variabili d'ambiente da .env
 
+const eventoRoutes = require('./routes/eventRoutes.js');
+const userRoutes = require('./routes/userRoutes.js');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.json());
-
-// Consente richieste da localhost:5173
+// Permette al frontend (porta 5173) di fare richieste al backend (porta 3000)
 app.use(cors({
   origin: 'http://localhost:5173'
 }));
 
-// Connetti a MongoDB (metti la tua URI)
-require('dotenv').config();
-mongoose.connect(process.env.MONGODB_URI).then(() => console.log('MongoDB Connesso')).catch(err => console.error(err));
+// Interpreta il body delle richieste come JSON
+app.use(express.json());
 
-// Usa le rotte
+// Connessione a MongoDB tramite la stringa URI definita in .env
+mongoose.connect(process.env.MONGODB_URI)
+  .then(function() {
+    console.log('MongoDB connesso');
+  })
+  .catch(function(err) {
+    console.error('Errore connessione MongoDB:', err);
+  });
+
+// Registra le route: ogni percorso viene gestito dal rispettivo router
 app.use('/api/eventi', eventoRoutes);
 app.use('/api/user', userRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Server in ascolto sulla porta ${PORT}`);
+app.listen(PORT, function() {
+  console.log('Server in ascolto sulla porta ' + PORT);
 });

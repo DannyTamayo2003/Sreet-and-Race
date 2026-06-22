@@ -1,31 +1,27 @@
+/*
+ * event.js
+ * Schema Mongoose per il modello Evento.
+ * Definisce la struttura dei dati salvati nella collezione "Events" di MongoDB.
+ * Gli eventi sono creati direttamente dagli utenti dell'app.
+ */
+
 const mongoose = require('mongoose');
 
-// Definizione dello schema per gli eventi
 const eventSchema = new mongoose.Schema({
-    image: { type: String, required: false },
-    nameEvent: { type: String, required: true },
-    location: { type: String, required: true },
-    data: { type: Date, required: true },
-    description: { type: String, required: true },
+    image: { type: String },                            // URL dell'immagine dell'evento (opzionale)
+    nameEvent: { type: String, required: true },        // Nome dell'evento (obbligatorio)
+    location: { type: String, required: true },         // Città o luogo dell'evento (obbligatorio)
+    data: { type: Date, required: true },               // Data dell'evento (obbligatorio)
+    description: { type: String, required: true },      // Descrizione breve (obbligatorio)
 
-    //questo campo serve per distinguere gli eventi creati dagli utenti e quelli provenienti da fonti esterne.
+    // Campi opzionali per maggiori dettagli sull'evento
+    orario: { type: String },                           // Orario dell'evento (es. "15:30")
+    descrizioneDettagliata: { type: String },           // Descrizione estesa
+    organizzatore: { type: String },                    // Nome dell'organizzatore
 
-    // 'user' = evento creato dalla community, 'external' = riservato per usi futuri
-
-    source: {//source indica la provenienza dell'evento, se è stato creato da un utente o se proviene da una fonte esterna.
-        type: String,
-        enum: ['user', 'external'], // Definisce i valori consentiti per il campo source
-        default: 'user' // Imposta il valore predefinito su 'user'
-    },
-
-    geoRegion: { type: String, required: false },
-    geoProvince: { type: String, required: false },
-
-    // Aggiunta dei campi solo del dettaglio
-    orario: { type: String, required: false },
-    descrizioneDettagliata: { type: String, required: false },
-    organizzatore: { type: String, required: false },
-
+    // Posizione geografica: utile per il filtro di ricerca per regione
+    geoRegion: { type: String },                        // Regione italiana (es. "Lombardia")
+    geoProvince: { type: String }                       // Provincia (es. "Milano")
 });
 
 const Event = mongoose.model('Event', eventSchema, 'Events');

@@ -1,45 +1,42 @@
-// EventDetailPage.jsx
-import { useLocation, useParams } from 'react-router-dom'
+/*
+ * EventDetailPage.jsx — Pagina di dettaglio di un singolo evento
+ * Mostra tutte le informazioni di un evento.
+ *
+ * Strategia di caricamento dati (in ordine di priorità):
+ * 1. Se l'utente arriva dalla card eventi, l'oggetto evento è già nel router state → nessuna fetch
+ * 2. Altrimenti, carica l'evento dal backend tramite l'ID nell'URL
+ */
+
 import React, { useEffect, useState } from 'react'
-import mockEvents from '../mocks/MockEvents'
+import { useLocation, useParams } from 'react-router-dom'
 import '../style/EventDetailStyle.css'
 
-
 export default function EventDetailPage() {
-  const { id } = useParams()
-  const location = useLocation()
+  const { id } = useParams()           // ID dell'evento dall'URL (es. /event/abc123)
+  const location = useLocation()       // Accede allo state passato dal router
   const [event, setEvent] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  useEffect(() => {
-    // Se arriviamo dalla card, usiamo subito l'evento passato nello state del router.
-    // Questo evita una fetch inutile e funziona bene anche per gli eventi esterni.
-    if (location.state?.event) {
+  useEffect(function() {
+    // Caso 1: evento già disponibile dal router state (click su una card)
+    if (location.state && location.state.event) {
       setEvent(location.state.event)
       setLoading(false)
       return
     }
 
-    // Fallback 1: eventi mock usati in alcune parti vecchie del progetto.
-    const mockEvent = mockEvents.find(e => String(e.id) === String(id))
-    if (mockEvent) {
-      setEvent(mockEvent)
-      setLoading(false)
-      return
-    }
-
-    // Fallback 2: se non abbiamo lo state e non troviamo il mock, proviamo la fetch API locale.
-    fetch(`http://localhost:3000/api/eventi/${id}`)
-      .then(res => {
+    // Caso 2: nessun state disponibile, carica dal backend tramite ID
+    fetch(`${import.meta.env.VITE_API_URL}/api/eventi/${id}`)
+      .then(function(res) {
         if (!res.ok) throw new Error('Evento non trovato')
         return res.json()
       })
-      .then(data => {
+      .then(function(data) {
         setEvent(data)
         setLoading(false)
       })
-      .catch(err => {
+      .catch(function(err) {
         setError(err.message)
         setLoading(false)
       })
@@ -51,16 +48,16 @@ export default function EventDetailPage() {
 
   return (
     <div className="eventDetailHero">
+      {/* Immagine di sfondo dell'evento */}
       <div
         className="eventDetailBg"
-        style={{
-          backgroundImage: `url(${event.img || event.image})`
-        }}
+        style={{ backgroundImage: `url(${event.image})` }}
       />
+
       <div className="eventDetailContent">
-        <h1 className="eventDetailTitle">{event.nome || event.nameEvent}</h1>
-        <h3 className="eventDetailSubtitle">{event.descrizione || event.description}</h3>
-        
+        <h1 className="eventDetailTitle">{event.nameEvent}</h1>
+        <h3 className="eventDetailSubtitle">{event.description}</h3>
+
         <div className="eventDetailInfoList">
           {event.location && (
             <div className="eventDetailRow">
@@ -68,53 +65,16 @@ export default function EventDetailPage() {
               {event.location}
             </div>
           )}
-          {event.indirizzo && (
-            <div className="eventDetailRow">
-              <span className="eventDetailLabel">Indirizzo:</span>
-              {event.indirizzo} {event.cap && `- ${event.cap}`}
-            </div>
-          )}
-          {/* I campi geo arrivano dal backend esterno e servono anche per il filtro nella search bar. */}
-          {event.geoRegion && (
-            <div className="eventDetailRow">
-              <span className="eventDetailLabel">Regione:</span>
-              {event.geoRegion}
-            </div>
-          )}
-          {event.geoProvince && (
-            <div className="eventDetailRow">
-              <span className="eventDetailLabel">Provincia:</span>
-              {event.geoProvince}
-            </div>
-          )}
-          {event.categoria && (
-            <div className="eventDetailRow">
-              <span className="eventDetailLabel">Categoria:</span>
-              {event.categoria} {event.sottocategoria && `(${event.sottocategoria})`}
-            </div>
-          )}
           {event.data && (
             <div className="eventDetailRow">
               <span className="eventDetailLabel">Data:</span>
-              {event.data}
+              {new Date(event.data).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })}
             </div>
           )}
           {event.orario && (
             <div className="eventDetailRow">
               <span className="eventDetailLabel">Orario:</span>
               {event.orario}
-            </div>
-          )}
-          {event.prezzoMin && event.prezzoMax && (
-            <div className="eventDetailRow">
-              <span className="eventDetailLabel">Prezzo:</span>
-              €{event.prezzoMin} - €{event.prezzoMax}
-            </div>
-          )}
-          {event.stato && (
-            <div className="eventDetailRow">
-              <span className="eventDetailLabel">Stato:</span>
-              {event.stato === 'active' ? '✓ In vendita' : event.stato}
             </div>
           )}
           {event.descrizioneDettagliata && (

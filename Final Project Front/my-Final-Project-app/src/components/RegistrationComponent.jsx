@@ -1,8 +1,15 @@
+/*
+ * RegistrationComponent.jsx — Form di registrazione
+ * Raccoglie i dati del nuovo utente e li invia al backend tramite POST.
+ * La data di nascita viene convertita in formato ISO 8601 prima dell'invio.
+ */
+
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import '../style/RegistrationStyle.css'
 
-
 export default function RegistrationComponent() {
+  const navigate = useNavigate()
   const [form, setForm] = useState({
     nameUser: '',
     dateOfBirth: '',
@@ -10,49 +17,43 @@ export default function RegistrationComponent() {
     pwdUser: ''
   })
 
-  const handleChange = e => {
+  // Aggiorna il campo corrispondente ogni volta che l'utente digita
+  function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = async e => {
+  async function handleSubmit(e) {
     e.preventDefault()
-    // Preparazione dei dati per l'invio al backend
-    const dataToSend = { ...form };
 
-    // Gestione specifica per dateOfBirth:
-    // Converti la stringa 'YYYY-MM-DD' in un oggetto con '$date' e formato ISO 8601
+    const dataToSend = { ...form }
+
+    // L'input HTML di tipo "date" restituisce una stringa 'YYYY-MM-DD'.
+    // MongoDB si aspetta il formato ISO 8601 (es. "1990-05-20T00:00:00.000Z").
     if (form.dateOfBirth) {
-      // Crea un oggetto Date dalla stringa YYYY-MM-DD
-      const dateObject = new Date(form.dateOfBirth);
-      // Assicurati che sia una data valida
+      const dateObject = new Date(form.dateOfBirth)
       if (!isNaN(dateObject.getTime())) {
-        dataToSend.dateOfBirth = dateObject.toISOString();
+        dataToSend.dateOfBirth = dateObject.toISOString()
       } else {
-        // Gestisci il caso in cui la data non è valida, se necessario
-        console.error("Data di nascita non valida:", form.dateOfBirth);
-        alert("Per favore, inserisci una data di nascita valida.");
-        return; // Blocca l'invio del form
+        alert('Per favore, inserisci una data di nascita valida.')
+        return
       }
     }
 
     try {
-      const res = await fetch('http://localhost:3000/api/user/register', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/user/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dataToSend)
       })
       const data = await res.json()
+
       if (res.ok) {
-        alert('Registrazione completata!')
-        // Puoi reindirizzare al login qui, ad esempio:
-        // navigate('/login');
+        navigate('/login')
       } else {
-        // Se il backend restituisce un messaggio di errore specifico
-        alert(data.message || data.error || 'Registrazione fallita');
+        alert(data.message || data.error || 'Registrazione fallita. Riprova.')
       }
     } catch (err) {
-      console.error('Errore di rete o nella richiesta:', err);
-      alert('Errore di rete. Controlla la tua connessione o riprova più tardi.');
+      alert('Errore di rete. Controlla la connessione e riprova.')
     }
   }
 
