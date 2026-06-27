@@ -7,38 +7,17 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const path = require('path');
+const { storage } = require('../config/cloudinary.js');
 const eventoController = require('../controllers/eventController.js');
 const userController = require('../controllers/userController.js');
+const { creazioneEventoRules } = require('../validators/eventValidators.js');
 
-// Percorso assoluto alla cartella uploads (più affidabile del path relativo su Windows)
-const uploadsDir = path.join(__dirname, '..', 'uploads');
-
-// Configurazione multer: salva le immagini nella cartella /uploads con nome univoco
-const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, uploadsDir);
-  },
-  filename: function(req, file, cb) {
-    const estensione = path.extname(file.originalname);
-    cb(null, Date.now() + estensione);
-  }
-});
-
-// Accetta solo immagini
-const upload = multer({
-  storage: storage,
-  fileFilter: function(req, file, cb) {
-    if (file.mimetype.startsWith('image/')) {
-      cb(null, true);
-    } else {
-      cb(new Error('Solo immagini sono consentite'));
-    }
-  }
-});
+// multer usa lo storage Cloudinary: il file viene caricato direttamente nel cloud
+const upload = multer({ storage });
 
 // POST /api/eventi/ — Crea un nuovo evento (richiede token)
-router.post('/', userController.verificaToken, upload.single('image'), eventoController.createEvento);
+// Ordine: token → multer (processa FormData) → validazione → controller
+router.post('/', userController.verificaToken, upload.single('image'), creazioneEventoRules, eventoController.createEvento);
 
 // GET /api/eventi/ — Restituisce tutti gli eventi (pubblica, nessun token richiesto)
 router.get('/', eventoController.getEventi);
@@ -47,7 +26,7 @@ router.get('/', eventoController.getEventi);
 router.get('/:id', eventoController.getEventoById);
 
 // PUT /api/eventi/:id — Modifica un evento (richiede token, solo il creatore)
-router.put('/:id', userController.verificaToken, upload.single('image'), eventoController.updateEvento);
+router.put('/:id', userController.verificaToken, upload.single('image'), creazioneEventoRules, eventoController.updateEvento);
 
 // DELETE /api/eventi/:id — Elimina un evento (richiede token, solo il creatore)
 router.delete('/:id', userController.verificaToken, eventoController.deleteEvento);

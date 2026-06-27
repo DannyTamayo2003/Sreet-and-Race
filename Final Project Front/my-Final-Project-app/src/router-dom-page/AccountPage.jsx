@@ -29,8 +29,14 @@ export default function AccountPage() {
 
     // Carica profilo e eventi in parallelo con Promise.all
     Promise.all([
-      fetch(`${import.meta.env.VITE_API_URL}/api/user/profile`, { headers }).then(function(r) { return r.json() }),
-      fetch(`${import.meta.env.VITE_API_URL}/api/user/myEvents`, { headers }).then(function(r) { return r.json() })
+      fetch(`${import.meta.env.VITE_API_URL}/api/user/profile`, { headers }).then(function(r) {
+        if (!r.ok) throw new Error('Token scaduto o non valido');
+        return r.json()
+      }),
+      fetch(`${import.meta.env.VITE_API_URL}/api/user/myEvents`, { headers }).then(function(r) {
+        if (!r.ok) throw new Error('Token scaduto o non valido');
+        return r.json()
+      })
     ])
     .then(function([profiloData, eventiData]) {
       setProfilo(profiloData)
@@ -38,8 +44,8 @@ export default function AccountPage() {
       setLoading(false)
     })
     .catch(function() {
-      setError('Errore nel caricamento del profilo. Riprova più tardi.')
-      setLoading(false)
+      localStorage.removeItem('token')
+      navigate('/login')
     })
   }, [token])
 

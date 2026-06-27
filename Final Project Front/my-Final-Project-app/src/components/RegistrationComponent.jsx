@@ -16,10 +16,13 @@ export default function RegistrationComponent() {
     emailUser: '',
     pwdUser: ''
   })
+  const [formErrors, setFormErrors] = useState({})
 
-  // Aggiorna il campo corrispondente ogni volta che l'utente digita
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value })
+    if (formErrors[e.target.name]) {
+      setFormErrors({ ...formErrors, [e.target.name]: '' })
+    }
   }
 
   async function handleSubmit(e) {
@@ -49,8 +52,14 @@ export default function RegistrationComponent() {
 
       if (res.ok) {
         navigate('/login')
+      } else if (data.errors) {
+        const erroriPerCampo = {}
+        data.errors.forEach(function(err) {
+          erroriPerCampo[err.path] = err.msg
+        })
+        setFormErrors(erroriPerCampo)
       } else {
-        alert(data.message || data.error || 'Registrazione fallita. Riprova.')
+        alert(data.message || 'Registrazione fallita. Riprova.')
       }
     } catch (err) {
       alert('Errore di rete. Controlla la connessione e riprova.')
@@ -68,8 +77,8 @@ export default function RegistrationComponent() {
             name="nameUser"
             value={form.nameUser}
             onChange={handleChange}
-            required
           />
+          {formErrors.nameUser && <p className="form-error">{formErrors.nameUser}</p>}
         </label>
         <label>
           Data di nascita:
@@ -78,8 +87,8 @@ export default function RegistrationComponent() {
             name="dateOfBirth"
             value={form.dateOfBirth}
             onChange={handleChange}
-            required
           />
+          {formErrors.dateOfBirth && <p className="form-error">{formErrors.dateOfBirth}</p>}
         </label>
       </div>
       <div className="registration-row">
@@ -90,8 +99,8 @@ export default function RegistrationComponent() {
             name="emailUser"
             value={form.emailUser}
             onChange={handleChange}
-            required
           />
+          {formErrors.emailUser && <p className="form-error">{formErrors.emailUser}</p>}
         </label>
         <label>
           Password:
@@ -100,8 +109,8 @@ export default function RegistrationComponent() {
             name="pwdUser"
             value={form.pwdUser}
             onChange={handleChange}
-            required
           />
+          {formErrors.pwdUser && <p className="form-error">{formErrors.pwdUser}</p>}
         </label>
       </div>
       <button type="submit">Registrati</button>

@@ -7,9 +7,10 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController.js');
+const { registrazioneRules } = require('../validators/userValidators.js');
 
 // POST /api/user/register — Registra un nuovo utente (nessuna autenticazione richiesta)
-router.post('/register', userController.createUtente);
+router.post('/register', registrazioneRules, userController.createUtente);
 
 // POST /api/user/login — Login con email e password, restituisce un token JWT
 router.post('/login', userController.loginUtente);

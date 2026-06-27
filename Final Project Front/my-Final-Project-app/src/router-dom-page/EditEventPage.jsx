@@ -47,6 +47,7 @@ export default function EditEventPage() {
   // imageFile è null se l'utente non cambia immagine → il backend mantiene quella esistente
   const [imageFile, setImageFile] = useState(null)
   const [imagePreview, setImagePreview] = useState(evento.image || '')
+  const [formErrors, setFormErrors] = useState({})
 
   // Revoca l'URL locale solo se è stato creato da noi con createObjectURL
   useEffect(function() {
@@ -57,6 +58,9 @@ export default function EditEventPage() {
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value })
+    if (formErrors[e.target.name]) {
+      setFormErrors({ ...formErrors, [e.target.name]: '' })
+    }
   }
 
   function handleImageChange(e) {
@@ -108,6 +112,12 @@ export default function EditEventPage() {
       if (res.ok) {
         alert('Evento aggiornato con successo!')
         navigate('/account')
+      } else if (data.errors) {
+        const erroriPerCampo = {}
+        data.errors.forEach(function(err) {
+          erroriPerCampo[err.path] = err.msg
+        })
+        setFormErrors(erroriPerCampo)
       } else {
         alert(data.message || 'Errore durante l\'aggiornamento. Riprova.')
       }
@@ -128,11 +138,11 @@ export default function EditEventPage() {
             name="nameEvent"
             value={form.nameEvent}
             onChange={handleChange}
-            required
             maxLength={50}
             className="wide-input"
           />
         </label>
+        {formErrors.nameEvent && <p className="form-error">{formErrors.nameEvent}</p>}
       </div>
 
       <label>
@@ -141,10 +151,10 @@ export default function EditEventPage() {
           name="description"
           value={form.description}
           onChange={handleChange}
-          required
           maxLength={150}
         />
       </label>
+      {formErrors.description && <p className="form-error">{formErrors.description}</p>}
 
       <div className="event-form-grid">
         <label>
@@ -154,8 +164,8 @@ export default function EditEventPage() {
             name="data"
             value={form.data}
             onChange={handleChange}
-            required
           />
+          {formErrors.data && <p className="form-error">{formErrors.data}</p>}
         </label>
         <label>
           Città:
@@ -164,17 +174,18 @@ export default function EditEventPage() {
             name="location"
             value={form.location}
             onChange={handleChange}
-            required
           />
+          {formErrors.location && <p className="form-error">{formErrors.location}</p>}
         </label>
         <label>
           Regione:
-          <select name="geoRegion" value={form.geoRegion} onChange={handleChange} required>
+          <select name="geoRegion" value={form.geoRegion} onChange={handleChange}>
             <option value="">-- Seleziona regione --</option>
             {REGIONI_ITALIANE.map(function(regione) {
               return <option key={regione} value={regione}>{regione}</option>
             })}
           </select>
+          {formErrors.geoRegion && <p className="form-error">{formErrors.geoRegion}</p>}
         </label>
         <label>
           Orario:
@@ -183,8 +194,8 @@ export default function EditEventPage() {
             name="orario"
             value={form.orario}
             onChange={handleChange}
-            required
           />
+          {formErrors.orario && <p className="form-error">{formErrors.orario}</p>}
         </label>
         <label>
           Organizzatore:

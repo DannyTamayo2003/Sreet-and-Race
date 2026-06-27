@@ -9,10 +9,17 @@ const Evento = require('../models/event.js');
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { validationResult } = require('express-validator');
 require('dotenv').config();
 
 // REGISTRAZIONE: crea un nuovo utente nel database con la password criptata
 exports.createUtente = async function(req, res) {
+  // Controlla se la validazione ha trovato errori (definita in userValidators.js)
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   try {
     // bcrypt.hash cripta la password con 10 "salt rounds".
     // Il numero indica quante volte l'algoritmo viene applicato: più è alto,

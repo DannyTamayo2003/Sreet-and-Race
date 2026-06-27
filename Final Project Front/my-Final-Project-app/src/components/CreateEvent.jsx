@@ -31,6 +31,7 @@ export default function CreateEvent() {
   // Stato separato per il file immagine e l'anteprima (non fa parte del JSON inviato al backend)
   const [imageFile, setImageFile] = useState(null)
   const [imagePreview, setImagePreview] = useState('')
+  const [formErrors, setFormErrors] = useState({})
 
   // Revoca l'URL dell'anteprima quando cambia o quando il componente si smonta,
   // per evitare memory leak (createObjectURL alloca memoria nel browser)
@@ -42,6 +43,10 @@ export default function CreateEvent() {
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value })
+    // Rimuove l'errore del campo non appena l'utente inizia a modificarlo
+    if (formErrors[e.target.name]) {
+      setFormErrors({ ...formErrors, [e.target.name]: '' })
+    }
   }
 
   function handleImageChange(e) {
@@ -99,8 +104,15 @@ export default function CreateEvent() {
 
       if (res.ok) {
         navigate('/eventpage')
+      } else if (dataRes.errors) {
+        // Converte l'array di errori in un oggetto { nomeCampo: messaggio }
+        const erroriPerCampo = {}
+        dataRes.errors.forEach(function(err) {
+          erroriPerCampo[err.path] = err.msg
+        })
+        setFormErrors(erroriPerCampo)
       } else {
-        alert(dataRes.message || dataRes.error || 'Errore: evento non creato. Riprova più tardi.')
+        alert(dataRes.message || 'Errore: evento non creato. Riprova più tardi.')
       }
     } catch (err) {
       alert('Errore di rete. Controlla la connessione e riprova.')
@@ -119,11 +131,11 @@ export default function CreateEvent() {
             name="nameEvent"
             value={form.nameEvent}
             onChange={handleChange}
-            required
             maxLength={50}
             className="wide-input"
           />
         </label>
+        {formErrors.nameEvent && <p className="form-error">{formErrors.nameEvent}</p>}
       </div>
 
       <label>
@@ -132,10 +144,10 @@ export default function CreateEvent() {
           name="description"
           value={form.description}
           onChange={handleChange}
-          required
           maxLength={150}
         />
       </label>
+      {formErrors.description && <p className="form-error">{formErrors.description}</p>}
 
       <div className="event-form-grid">
         <label>
@@ -145,8 +157,8 @@ export default function CreateEvent() {
             name="data"
             value={form.data}
             onChange={handleChange}
-            required
           />
+          {formErrors.data && <p className="form-error">{formErrors.data}</p>}
         </label>
         <label>
           Città:
@@ -155,17 +167,18 @@ export default function CreateEvent() {
             name="location"
             value={form.location}
             onChange={handleChange}
-            required
           />
+          {formErrors.location && <p className="form-error">{formErrors.location}</p>}
         </label>
         <label>
           Regione:
-          <select name="geoRegion" value={form.geoRegion} onChange={handleChange} required>
+          <select name="geoRegion" value={form.geoRegion} onChange={handleChange}>
             <option value="">-- Seleziona regione --</option>
             {REGIONI_ITALIANE.map(function(regione) {
               return <option key={regione} value={regione}>{regione}</option>
             })}
           </select>
+          {formErrors.geoRegion && <p className="form-error">{formErrors.geoRegion}</p>}
         </label>
         <label>
           Orario:
@@ -174,8 +187,8 @@ export default function CreateEvent() {
             name="orario"
             value={form.orario}
             onChange={handleChange}
-            required
           />
+          {formErrors.orario && <p className="form-error">{formErrors.orario}</p>}
         </label>
         <label>
           Organizzatore:

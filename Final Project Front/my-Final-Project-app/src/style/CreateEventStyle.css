@@ -161,6 +161,15 @@
   transition: box-shadow 0.2s;
 }
 
+/* Messaggio di errore sotto i campi del form */
+.form-error {
+  color: #ff4d4d;
+  font-size: 0.8rem;
+  margin: 2px 0 0 0;
+  font-weight: 500;
+  font-family: inherit;
+}
+
 /* Responsive per mobile */
 @media (max-width: 900px) {
   .create-event-form {

@@ -11,6 +11,8 @@ require('dotenv').config(); // Carica le variabili d'ambiente da .env
 
 const eventoRoutes = require('./routes/eventRoutes.js');
 const userRoutes = require('./routes/userRoutes.js');
+const cron = require('node-cron');
+const cleanupExpiredEvents = require('./jobs/cleanupExpiredEvents.js');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -27,6 +29,9 @@ app.use(express.json());
 mongoose.connect(process.env.MONGODB_URI)
   .then(function() {
     console.log('MongoDB connesso');
+    // Avvia il job di pulizia ogni giorno alle 02:00
+    cron.schedule('0 2 * * *', cleanupExpiredEvents);
+    console.log('[cleanup] Job schedulato: ogni giorno alle 02:00');
   })
   .catch(function(err) {
     console.error('Errore connessione MongoDB:', err);
