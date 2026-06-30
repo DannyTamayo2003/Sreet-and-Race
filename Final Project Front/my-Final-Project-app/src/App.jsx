@@ -38,9 +38,8 @@ function App() {
   }, [])
 
   return (
-    <>
+    <div id="appLayout">
       <NavBarComponent menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-      {/* "blurred" sfuma il contenuto quando il menu mobile è aperto */}
       <div id="mainContent" className={menuOpen ? "blurred" : ""}>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -54,7 +53,7 @@ function App() {
           <Route path="/account" element={<AccountPage />} />
         </Routes>
       </div>
-    </>
+    </div>
   )
 }
 

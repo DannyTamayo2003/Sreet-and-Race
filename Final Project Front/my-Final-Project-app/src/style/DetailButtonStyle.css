@@ -1,17 +1,22 @@
 .detailButton {
-  background: linear-gradient(90deg, #ff00e6 0%, #3c00ff 100%);
-  color: #fff200;
+  background: #7B2FFF;
+  color: #ffffff;
   border: none;
   border-radius: 8px;
-  padding: 5px 16px;
-  font-size: 0.85rem;
+  padding: 7px 16px;
+  font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-  margin: 10px auto 0 auto;
-  box-shadow: 0 2px 10px rgba(60, 0, 255, 0.10);
+  transition: background 0.2s, box-shadow 0.2s;
+  margin: 0;
+  box-shadow: 0 2px 12px rgba(123, 47, 255, 0.3);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   display: block;
+  width: 100%;
 }
 
+.detailButton:hover {
+  background: #9b5fff;
+  box-shadow: 0 2px 20px rgba(123, 47, 255, 0.5);
+}

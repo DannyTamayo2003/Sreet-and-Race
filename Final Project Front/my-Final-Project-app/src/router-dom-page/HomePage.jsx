@@ -8,18 +8,32 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import FeaturedCardComponent from '../components/FeaturedCardComponent'
 import '../style/HomePageStyle.css'
+import heroBg from '../assets/hero-bg.png'
 
 export default function HomePage() {
     return (
         <div id='mainContainer'>
-            <h1>STREET AND RACE</h1>
 
-            {/* Sezione hero con immagine in evidenza */}
+            {/* Hero section */}
+            <div className="hero-section">
+                <img
+                    className="hero-bg"
+                    src={heroBg}
+                    alt="hero"
+                />
+                <div className="hero-overlay">
+                    <h2>VIVI LA PASSIONE.<br /><em>OGNI STRADA, OGNI EVENTO.</em></h2>
+                    <p>Scopri i migliori raduni ed eventi automotive nella tua zona.</p>
+                    <Link to="/eventpage" className="hero-cta">Scopri gli eventi</Link>
+                </div>
+            </div>
+
+            {/* Sezione eventi in evidenza */}
+            <div id='titleFeaturedEvent'>
+                <h2>In Evidenza</h2>
+            </div>
             <div id='mainEventCard' className="event-flex-row">
                 <div className="featured-col">
-                    <div id="titleFeaturedEvent">
-                        <h2>In evidenza</h2>
-                    </div>
                     <FeaturedCardComponent />
                 </div>
             </div>

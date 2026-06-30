@@ -1,32 +1,25 @@
 /*
  * EventDetailPage.jsx — Pagina di dettaglio di un singolo evento
- * Mostra tutte le informazioni di un evento.
- *
- * Strategia di caricamento dati (in ordine di priorità):
- * 1. Se l'utente arriva dalla card eventi, l'oggetto evento è già nel router state → nessuna fetch
- * 2. Altrimenti, carica l'evento dal backend tramite l'ID nell'URL
+ * Strategia caricamento: prima dal router state (click su card), poi fetch dal backend.
  */
 
 import React, { useEffect, useState } from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation, useParams, Link } from 'react-router-dom'
 import '../style/EventDetailStyle.css'
 
 export default function EventDetailPage() {
-  const { id } = useParams()           // ID dell'evento dall'URL (es. /event/abc123)
-  const location = useLocation()       // Accede allo state passato dal router
+  const { id } = useParams()
+  const location = useLocation()
   const [event, setEvent] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
   useEffect(function() {
-    // Caso 1: evento già disponibile dal router state (click su una card)
     if (location.state && location.state.event) {
       setEvent(location.state.event)
       setLoading(false)
       return
     }
-
-    // Caso 2: nessun state disponibile, carica dal backend tramite ID
     fetch(`${import.meta.env.VITE_API_URL}/api/eventi/${id}`)
       .then(function(res) {
         if (!res.ok) throw new Error('Evento non trovato')
@@ -42,54 +35,109 @@ export default function EventDetailPage() {
       })
   }, [id, location.state])
 
-  if (loading) return <div>Caricamento...</div>
-  if (error) return <div>{error}</div>
-  if (!event) return <div>Evento non trovato</div>
+  if (loading) return <div className="ed-status">Caricamento...</div>
+  if (error) return <div className="ed-status ed-error">{error}</div>
+  if (!event) return <div className="ed-status">Evento non trovato</div>
+
+  const formatDate = (dateStr) => {
+    if (!dateStr) return null
+    return new Date(dateStr).toLocaleDateString('it-IT', {
+      day: 'numeric', month: 'long', year: 'numeric'
+    })
+  }
 
   return (
-    <div className="eventDetailHero">
-      {/* Immagine di sfondo dell'evento */}
-      <div
-        className="eventDetailBg"
-        style={{ backgroundImage: `url(${event.image})` }}
-      />
+    <div className="ed-page">
 
-      <div className="eventDetailContent">
-        <h1 className="eventDetailTitle">{event.nameEvent}</h1>
-        <h3 className="eventDetailSubtitle">{event.description}</h3>
+      {/* HERO */}
+      <div className="ed-hero">
+        <div
+          className="ed-hero-bg"
+          style={{ backgroundImage: `url(${event.image || 'https://placehold.co/1200x500/141414/333?text=No+Image'})` }}
+        />
+        <div className="ed-hero-overlay" />
+        <div className="ed-hero-content">
+          <Link to="/eventpage" className="ed-back">
+            ← Torna indietro
+          </Link>
+          <h1 className="ed-title">{event.nameEvent}</h1>
+          <div className="ed-hero-meta">
+            {event.location && (
+              <span className="ed-meta-item">
+                <ion-icon name="location-outline"></ion-icon>
+                {event.location}
+              </span>
+            )}
+            {event.orario && (
+              <span className="ed-meta-item">
+                <ion-icon name="time-outline"></ion-icon>
+                Dalle {event.orario}
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
 
-        <div className="eventDetailInfoList">
-          {event.location && (
-            <div className="eventDetailRow">
-              <span className="eventDetailLabel">Luogo:</span>
-              {event.location}
-            </div>
-          )}
-          {event.data && (
-            <div className="eventDetailRow">
-              <span className="eventDetailLabel">Data:</span>
-              {new Date(event.data).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })}
-            </div>
-          )}
-          {event.orario && (
-            <div className="eventDetailRow">
-              <span className="eventDetailLabel">Orario:</span>
-              {event.orario}
-            </div>
-          )}
+      {/* BODY */}
+      <div className="ed-body">
+
+        {/* COLONNA SINISTRA — Descrizioni */}
+        <div className="ed-col-main">
+          <div className="ed-section">
+            <h3 className="ed-section-title">Informazioni</h3>
+            <p className="ed-description">{event.description}</p>
+          </div>
+
           {event.descrizioneDettagliata && (
-            <div className="eventDetailRow eventDetailDettagliata">
-              <span className="eventDetailLabel">Descrizione dettagliata:</span>
-              {event.descrizioneDettagliata}
-            </div>
-          )}
-          {event.organizzatore && (
-            <div className="eventDetailRow">
-              <span className="eventDetailLabel">Organizzatore:</span>
-              {event.organizzatore}
+            <div className="ed-section">
+              <h3 className="ed-section-title">Descrizione dettagliata</h3>
+              <p className="ed-description">{event.descrizioneDettagliata}</p>
             </div>
           )}
         </div>
+
+        {/* COLONNA DESTRA — Info rapide */}
+        <div className="ed-col-side">
+          <div className="ed-info-card">
+            {event.data && (
+              <div className="ed-info-row">
+                <ion-icon name="calendar-outline"></ion-icon>
+                <div>
+                  <div className="ed-info-label">Data</div>
+                  <div className="ed-info-value">{formatDate(event.data)}</div>
+                </div>
+              </div>
+            )}
+            {event.orario && (
+              <div className="ed-info-row">
+                <ion-icon name="time-outline"></ion-icon>
+                <div>
+                  <div className="ed-info-label">Orario</div>
+                  <div className="ed-info-value">{event.orario}</div>
+                </div>
+              </div>
+            )}
+            {event.location && (
+              <div className="ed-info-row">
+                <ion-icon name="location-outline"></ion-icon>
+                <div>
+                  <div className="ed-info-label">Luogo</div>
+                  <div className="ed-info-value">{event.location}</div>
+                </div>
+              </div>
+            )}
+            {event.organizzatore && (
+              <div className="ed-info-row">
+                <ion-icon name="person-outline"></ion-icon>
+                <div>
+                  <div className="ed-info-label">Organizzatore</div>
+                  <div className="ed-info-value">{event.organizzatore}</div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
       </div>
     </div>
   )

@@ -23,18 +23,20 @@
 }
 
 .contactsSection a {
-  color: #fff200;
+  color: #cccccc;
   text-decoration: none;
   font-weight: 600;
+  transition: color 0.2s;
 }
 
 .contactsSection a:hover {
-  text-decoration: underline;
+  color: #7B2FFF;
+  text-decoration: none;
 }
 
 .contact-icon {
   font-size: 1.5em;
-  color: #3c00ff;
+  color: #7B2FFF;
   vertical-align: middle;
 }
 .contact-icon.custom-gmail {

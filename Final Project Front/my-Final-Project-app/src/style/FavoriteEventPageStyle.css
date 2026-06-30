@@ -6,11 +6,12 @@
 }
 
 .favorite-title {
-  color: #fff200;
+  color: #ffffff;
   text-align: center;
   margin-bottom: 32px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  text-shadow: 0 0 20px rgba(123, 47, 255, 0.5);
 }
 
 .favorite-empty {
@@ -29,7 +30,7 @@
 .remove-favorite-btn {
   margin: 12px auto 24px auto;
   display: block;
-  background: #b01919;
+  background: #7B2FFF;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -39,14 +40,13 @@
   transition: background 0.2s;
 }
 .remove-favorite-btn:hover {
-  background: #ff9800;
-  color: #222;
+  background: #9b5fff;
 }
 
 .remove-favorite-icon {
   background: none;
   border: none;
-  color: #b01919;
+  color: #7B2FFF;
   font-size: 1.7rem;
   cursor: pointer;
   margin: 8px auto 16px auto;
@@ -54,6 +54,6 @@
   transition: color 0.2s;
 }
 .remove-favorite-icon:hover {
-  color: #ff9800;
+  color: #9b5fff;
 }
 

@@ -1,23 +1,20 @@
 h1 {
   color: #ffffff;
-  font-size: 3rem;
+  font-size: 2.8rem;
   font-weight: 900;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  text-shadow:
-    2px 2px 0 #b01919,
-    4px 4px 8px #ff00cc,
-    0 0 24px #3c00ff;
+  text-shadow: 0 0 30px rgba(123, 47, 255, 0.6);
   user-select: none;
-  margin-bottom: 24px;
+  margin-bottom: 8px;
   text-align: center;
 }
 
-#Logo {
-  width: 400px;
-  height: 400px;
-  margin: 20px auto;
+h1 em, h1 span.accent {
+  color: #7B2FFF;
+  font-style: italic;
 }
+
 #mainContent {
   width: 100%;
   min-height: 100vh;
@@ -25,11 +22,11 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* o center se vuoi tutto centrato verticalmente */
-  padding-top: 100px; /* o l'altezza della tua navbar fissa */
-  background: transparent; /* o il colore di sfondo che preferisci */
+  justify-content: flex-start;
+  background: transparent;
   overflow-x: hidden;
 }
+
 #mainContainer {
   display: flex;
   flex-direction: column;
@@ -41,48 +38,127 @@ h1 {
   text-align: center;
 }
 
+/* Hero section */
+.hero-section {
+  width: 100%;
+  max-width: 1100px;
+  margin: 40px auto 48px auto;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  min-height: 340px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.45);
+}
+
+.hero-overlay {
+  position: relative;
+  z-index: 2;
+  padding: 40px 48px;
+  text-align: left;
+}
+
+.hero-overlay h2 {
+  font-size: 2.4rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #ffffff;
+  line-height: 1.1;
+  margin-bottom: 12px;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.7);
+}
+
+.hero-overlay h2 em {
+  color: #7B2FFF;
+  font-style: italic;
+}
+
+.hero-overlay p {
+  color: #cccccc;
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+  max-width: 380px;
+  font-family: Arial, sans-serif;
+  letter-spacing: 0;
+}
+
+.hero-cta {
+  display: inline-block;
+  background: #7B2FFF;
+  color: #ffffff !important;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none !important;
+  letter-spacing: 0.05em;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(123, 47, 255, 0.4);
+}
+
+.hero-cta:hover {
+  background: #9b5fff;
+  box-shadow: 0 4px 28px rgba(123, 47, 255, 0.7);
+}
+
+/* Sezione eventi in evidenza */
+#titleFeaturedEvent {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: left;
+  margin-bottom: 20px;
+  color: #ffffff;
+  width: 100%;
+  max-width: 1100px;
+  padding: 0 16px;
+}
+
+#titleFeaturedEvent h2 {
+  color: #ffffff;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-shadow: none;
+  margin: 0;
+}
+
+h2 {
+  color: #ffffff;
+  text-shadow: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .featured-col,
 #eventDetailsContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  width: 100%;
 }
-
-#titleFeaturedEvent {
-  text-shadow:
-    2px 2px 0 #b01919,
-    4px 4px 8px #ff00cc,
-    0 0 24px #3c00ff;
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  text-align: center;
-  margin-bottom: 24px;
-}
-
-h2 {
-  color: #fff200;
-  text-shadow:
-    2px 2px 0 #b01919,
-    4px 4px 8px #ff00cc,
-    0 0 24px #3c00ff;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-
-}
-
 
 #mainEventCard {
-
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  margin-top: 40px;
+  margin-top: 0;
   margin-bottom: 40px;
-
+  width: 100%;
 }
 
 #eventDetails {
@@ -97,37 +173,33 @@ h2 {
 
 #eventDetails h2 {
   color: #ffffff;
-  text-shadow:
-    2px 2px 0 #b01919,
-    4px 4px 8px #ff00cc,
-    0 0 24px #3c00ff;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   margin-bottom: 16px;
+  text-shadow: none;
 }
 
+/* Icone navigazione rapida */
 .icon {
-  font-size: 48px;
-  width: 80px;
-  height: 80px;
- 
-  color: #ff00e6;
+  font-size: 40px;
+  width: 70px;
+  height: 70px;
+  color: #7B2FFF;
 }
 
 #iconContainer {
   height: 100px;
   width: 100%;
   max-width: 600px;
-  margin: 0 auto;
-  margin-bottom: 45px;
+  margin: 0 auto 45px auto;
   padding: 16px;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
-  align-items: center; 
-  gap: 32px;          
+  align-items: center;
+  gap: 48px;
 }
 
 .containerIconText {
@@ -139,36 +211,26 @@ h2 {
 .containerIconText h6 {
   display: flex;
   justify-content: center;
+  color: #aaaaaa;
+  font-size: 0.75rem;
+  margin-top: 6px;
 }
 
 span {
-  color: #ffffff;
-  text-shadow:
-    2px 2px 0 #000000,
-    4px 4px 8px #ff00cc,
-    0 0 24px #ffffff;
+  color: #7B2FFF;
+  text-shadow: none;
 }
 
-
-.featured-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-/* Flex container per mettere card e dettagli in linea */
 .event-flex-row {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
   gap: 32px;
-  /* spazio tra card e dettagli */
-  margin-top: 24px;
+  margin-top: 0;
+  width: 100%;
 }
 
-/* Responsive: su schermi piccoli, metti in colonna */
 @media (max-width: 900px) {
   .event-flex-row,
   #mainEventCard,
@@ -191,10 +253,17 @@ span {
     padding-left: 8px;
     padding-right: 8px;
   }
+  .hero-overlay h2 {
+    font-size: 1.6rem;
+  }
+  .hero-overlay {
+    padding: 24px 24px;
+  }
 }
 
 @media (max-width: 600px) {
   #mainContent {
+    padding-top: 70px;
     padding-left: 8px;
     padding-right: 8px;
   }
@@ -202,68 +271,29 @@ span {
     padding-left: 4px;
     padding-right: 4px;
   }
-}
-
-/* Riduci dimensioni e padding sotto i 600px */
-@media (max-width: 600px) {
-  #mainContent {
-    padding-top: 70px;
-     /* navbar più compatta su mobile */
-  }
   h1 {
-    font-size: 2rem;
-    letter-spacing: 0.08em;
-    margin-top: 40px;
+    font-size: 1.6rem;
+    letter-spacing: 0.06em;
   }
-  #titleFeaturedEvent h2 {
+  .hero-section {
+    min-height: 240px;
+  }
+  .hero-overlay h2 {
     font-size: 1.3rem;
-  }
-  .event-search-input {
-    width: 95%;
-    font-size: 1rem;
-  }
-  #iconContainer {
-    gap: 12px;
-  }
-  #Logo {
-    width: 140px;
-    height: 140px;
   }
   .featured-img {
     width: 100%;
     max-width: 350px;
     height: auto;
-    border-radius: 20px;
+    border-radius: 16px;
     display: block;
     margin: 0 auto;
     object-fit: cover;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
   }
 }
 
-/* Ancora più piccolo sotto i 400px */
 @media (max-width: 400px) {
   h1 {
-    font-size: 1.3rem;
-  }
-  .event-search-input {
-    font-size: 0.9rem;
-    padding: 6px 8px;
-  }
-  #Logo {
-    width: 90px;
-    height: 90px;
-  }
-  .featured-img {
-    width: 100%;
-    max-width: 350px;
-    height: auto;
-    border-radius: 20px;
-    display: block;
-    margin: 0 auto;
-    object-fit: cover;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    font-size: 1.2rem;
   }
 }
-
- 

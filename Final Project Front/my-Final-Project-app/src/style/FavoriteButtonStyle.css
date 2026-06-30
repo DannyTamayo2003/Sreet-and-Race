@@ -1,22 +1,21 @@
 .favoriteButton {
-  background: linear-gradient(90deg, #ff00e6, #3c00ff);
-  border: none;
+  background: rgba(123, 47, 255, 0.15);
+  border: 1px solid rgba(123, 47, 255, 0.4);
   border-radius: 8px;
-  padding: 3px 10px;      /* padding più piccolo */
-  font-size: 0.92rem;     /* font leggermente più piccolo */
+  padding: 5px 10px;
+  font-size: 0.92rem;
   font-weight: bold;
   cursor: pointer;
-  margin-top: 10px;
-  transition: background 0.2s;
+  transition: background 0.2s, border-color 0.2s;
   width: auto;
+  backdrop-filter: blur(4px);
 }
 
 .favoriteButton:hover {
-  background: linear-gradient(90deg, #fff200, #ff00cc);
-  color: #181818;
+  background: rgba(123, 47, 255, 0.35);
+  border-color: #7B2FFF;
 }
 
 .favoriteButtonText {
-  color: #fff200; /* oppure il colore che preferisci */
+  color: #ffffff;
 }
-

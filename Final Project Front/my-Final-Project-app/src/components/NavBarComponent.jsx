@@ -1,89 +1,126 @@
-/*
- * NavBarComponent.jsx — Barra di navigazione principale
- * Sempre visibile in cima alla pagina. Adatta i link in base allo stato di login:
- * - Se loggato: mostra Account e abilita Favorite e Create Event
- * - Se non loggato: mostra Login e disabilita le sezioni protette
- * Gestisce anche il toggle del menu mobile (Navbar.Toggle).
- */
-
 import React, { useState, useEffect } from 'react'
-import { Navbar, Nav, Container } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import '../style/NavBarStyle.css'
 import logo from '../assets/ProvaLogo.png'
 import userImg from '../assets/userimg.jpg'
 
 export default function NavBarComponent({ menuOpen, setMenuOpen }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const location = useLocation()
 
   useEffect(function() {
-    // Controlla se esiste un token in localStorage per determinare lo stato di login
     const token = localStorage.getItem('token')
-    setIsLoggedIn(!!token) // !! converte il valore in booleano (true se esiste, false se null)
-  }, [])
+    setIsLoggedIn(!!token)
+  }, [location])
+
+  const navLinks = [
+    { to: '/', label: 'Home', icon: 'home-outline', always: true },
+    { to: '/eventpage', label: 'Eventi', icon: 'calendar-outline', always: true },
+    { to: '/favorite', label: 'Preferiti', icon: 'heart-outline', protected: true },
+    { to: '/contacts', label: 'Contatti', icon: 'mail-outline', always: true },
+    { to: isLoggedIn ? '/createevent' : '#', label: 'Crea Evento', icon: 'add-circle-outline', protected: true },
+  ]
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary fixed-top">
-      <Container id="navbarContainer" fluid>
+    <>
+      {/* SIDEBAR DESKTOP */}
+      <aside className="sidebar">
+        <div className="sidebar-logo">
+          <Link to="/">
+            <img src={logo} alt="Logo" className="sidebar-logo-img" />
+          </Link>
+        </div>
 
-        {/* Logo — cliccabile, reindirizza alla home */}
-        <Navbar.Brand as={Link} to="/" className="d-flex align-items-center logoContainer">
-          <img id='Logo' src={logo} alt="ProvaLogo" />
-        </Navbar.Brand>
+        <nav className="sidebar-nav">
+          {navLinks.map(function(link) {
+            const isActive = location.pathname === link.to
+            const isDisabled = link.protected && !isLoggedIn
+            return (
+              <Link
+                key={link.to}
+                to={isDisabled ? '#' : link.to}
+                className={`sidebar-link ${isActive ? 'active' : ''} ${isDisabled ? 'disabled' : ''}`}
+                onClick={function(e) { if (isDisabled) e.preventDefault() }}
+              >
+                <ion-icon name={link.icon}></ion-icon>
+                <span>{link.label}</span>
+              </Link>
+            )
+          })}
+        </nav>
 
-        {/* Pulsante hamburger visibile su mobile */}
-        <Navbar.Toggle
-          aria-controls="basic-navbar-nav"
-          onClick={function() { setMenuOpen(function(open) { return !open }) }}
-        />
-
-        <Navbar.Collapse id="basic-navbar-nav" className={menuOpen ? "show" : ""}>
-          <Nav className="linkContainer">
-            <Nav.Link as={Link} to="/" className="nav-link-red">Home</Nav.Link>
-            <Nav.Link as={Link} to="/contacts" className="nav-link-red">Contacts</Nav.Link>
-
-            {/* Favorite: disabilitato se l'utente non è loggato */}
-            <Nav.Link
-              as={Link}
-              to="/favorite"
-              className={`navLinkOrange ${!isLoggedIn ? "disabled-link" : ""}`}
-              onClick={function(e) { if (!isLoggedIn) e.preventDefault() }}
+        <div className="sidebar-bottom">
+          <Link to={isLoggedIn ? '/account' : '/login'} className="sidebar-user">
+            <img src={userImg} alt="User" className="sidebar-user-img" />
+            <span>{isLoggedIn ? 'Account' : 'Login'}</span>
+          </Link>
+          {isLoggedIn && (
+            <button
+              className="sidebar-logout"
+              onClick={function() {
+                localStorage.removeItem('token')
+                window.location.href = '/'
+              }}
             >
-              Favorite
-            </Nav.Link>
+              <ion-icon name="log-out-outline"></ion-icon>
+              <span>Esci</span>
+            </button>
+          )}
+        </div>
+      </aside>
 
-            {/* Su mobile: mostra Account o Login in base allo stato di login */}
-            {isLoggedIn ? (
-              <Nav.Link as={Link} to="/account" className="nav-link-red d-lg-none navLinkLogin">Account</Nav.Link>
-            ) : (
-              <Nav.Link as={Link} to="/login" className="nav-link-red d-lg-none navLinkLogin">Login</Nav.Link>
-            )}
+      {/* TOP BAR MOBILE */}
+      <header className="mobile-header">
+        <Link to="/">
+          <img src={logo} alt="Logo" className="mobile-logo" />
+        </Link>
+        <button className="mobile-hamburger" onClick={function() { setMenuOpen(function(o) { return !o }) }}>
+          <ion-icon name={menuOpen ? 'close-outline' : 'menu-outline'}></ion-icon>
+        </button>
+      </header>
 
-            {/* Create Event: disabilitato se l'utente non è loggato */}
-            <Nav.Link
-              as={Link}
-              to={isLoggedIn ? "/createevent" : "#"}
-              className={`nav-link-red navLinkCreateEvent ${!isLoggedIn ? "disabled-link" : ""}`}
-              onClick={function(e) { if (!isLoggedIn) e.preventDefault() }}
+      {/* MENU MOBILE OVERLAY */}
+      {menuOpen && (
+        <div className="mobile-menu-overlay" onClick={function() { setMenuOpen(false) }}>
+          <div className="mobile-menu" onClick={function(e) { e.stopPropagation() }}>
+            {navLinks.map(function(link) {
+              const isDisabled = link.protected && !isLoggedIn
+              return (
+                <Link
+                  key={link.to}
+                  to={isDisabled ? '#' : link.to}
+                  className={`mobile-menu-link ${isDisabled ? 'disabled' : ''}`}
+                  onClick={function(e) {
+                    if (isDisabled) { e.preventDefault(); return }
+                    setMenuOpen(false)
+                  }}
+                >
+                  <ion-icon name={link.icon}></ion-icon>
+                  <span>{link.label}</span>
+                </Link>
+              )
+            })}
+            <Link
+              to={isLoggedIn ? '/account' : '/login'}
+              className="mobile-menu-link"
+              onClick={function() { setMenuOpen(false) }}
             >
-              Create Event
-            </Nav.Link>
-          </Nav>
-
-          {/* Su desktop: icona utente che porta ad Account o Login */}
-          <div className="loginUser d-none d-lg-flex">
-            <Link to={isLoggedIn ? "/account" : "/login"}>
-              <img
-                src={userImg}
-                alt="User Icon"
-                className="user-icon-img"
-                id="userImg"
-                style={{ cursor: 'pointer' }}
-              />
+              <ion-icon name="person-outline"></ion-icon>
+              <span>{isLoggedIn ? 'Account' : 'Login'}</span>
             </Link>
+            {isLoggedIn && (
+              <button className="mobile-menu-link mobile-logout" onClick={function() {
+                localStorage.removeItem('token')
+                setMenuOpen(false)
+                window.location.href = '/'
+              }}>
+                <ion-icon name="log-out-outline"></ion-icon>
+                <span>Esci</span>
+              </button>
+            )}
           </div>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+        </div>
+      )}
+    </>
   )
 }
