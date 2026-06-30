@@ -7,9 +7,10 @@
 }
 
 .mockEventCard {
-  background: #fff;
+  background: #181818;
+  border: 1px solid #3c00ff;
   border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  box-shadow: 0 2px 18px rgba(60, 0, 255, 0.15);
   width: 260px;
   padding: 18px 16px 20px 16px;
   display: flex;
@@ -20,7 +21,7 @@
 
 .mockEventCard:hover {
   transform: translateY(-6px) scale(1.03);
-  box-shadow: 0 6px 24px rgba(44, 62, 80, 0.18);
+  box-shadow: 0 6px 28px rgba(255, 0, 230, 0.25);
 }
 
 .mockEventCard img {
@@ -33,14 +34,15 @@
 
 .mockEventCard h3 {
   font-size: 1.18rem;
-  color: #2d3a4b;
+  color: #fff200;
+  text-shadow: 0 0 8px #ff00cc;
   margin: 0 0 8px 0;
   text-align: center;
 }
 
 .mockEventCard p {
   font-size: 1rem;
-  color: #555;
+  color: #cccccc;
   text-align: center;
   margin: 0;
 }

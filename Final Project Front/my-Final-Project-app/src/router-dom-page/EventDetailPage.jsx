@@ -1,8 +1,3 @@
-/*
- * EventDetailPage.jsx — Pagina di dettaglio di un singolo evento
- * Strategia caricamento: prima dal router state (click su card), poi fetch dal backend.
- */
-
 import React, { useEffect, useState } from 'react'
 import { useLocation, useParams, Link } from 'react-router-dom'
 import '../style/EventDetailStyle.css'

@@ -151,18 +151,42 @@ span {
 
 .how-card {
   flex: 1;
+  position: relative;
+  overflow: hidden;
   background: #141414;
   border: 1px solid #1e1e1e;
   border-radius: 16px;
-  padding: 28px 24px;
+  min-height: 280px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
 .how-card:hover {
   border-color: #7B2FFF;
+  transform: translateY(-4px);
+  box-shadow: 0 0 24px rgba(123, 47, 255, 0.25);
+}
+
+/* Immagine di sfondo card */
+.how-card-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.35) blur(1px);
+  z-index: 0;
+}
+
+/* Overlay contenuto sopra l'immagine */
+.how-card-overlay {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 28px 24px;
 }
 
 .how-card-number {
@@ -177,11 +201,19 @@ span {
   align-items: center;
   justify-content: center;
   letter-spacing: 0.04em;
+  flex-shrink: 0;
 }
 
-.how-card ion-icon {
-  font-size: 2rem;
-  color: #7B2FFF;
+/* Icona neon grande */
+.how-icon {
+  font-size: 2.8rem;
+  color: #ff00e6;
+  filter: drop-shadow(0 0 8px #ff00e6) drop-shadow(0 0 18px #3c00ff);
+}
+
+.how-icon-green {
+  color: #00ff88;
+  filter: drop-shadow(0 0 8px #00ff88) drop-shadow(0 0 18px #00cc66);
 }
 
 .how-card h3 {
@@ -218,8 +250,10 @@ span {
   color: #9b5fff !important;
 }
 
+/* Card 04 loggato: bordo verde */
 .how-card-auth--in {
-  border-color: rgba(123, 47, 255, 0.4);
+  border-color: #00ff88;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
 }
 
 .how-card-welcome strong {
@@ -266,6 +300,9 @@ span {
   }
   .hero-overlay h2 {
     font-size: 1.3rem;
+  }
+  .how-icon {
+    font-size: 2rem;
   }
 }
 

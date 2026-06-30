@@ -8,6 +8,8 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import '../style/HomePageStyle.css'
 import heroBg from '../assets/hero-bg.png'
+import gearImg from '../assets/gear-bg.png'
+import mapImg from '../assets/map-italy-bg.png'
 
 const HOW_IT_WORKS = [
     {
@@ -17,6 +19,7 @@ const HOW_IT_WORKS = [
         description: 'Cerca e filtra eventi automotive nella tua zona.',
         to: '/eventpage',
         linkLabel: 'Vai agli eventi',
+        bg: gearImg,
     },
     {
         number: '02',
@@ -25,6 +28,7 @@ const HOW_IT_WORKS = [
         description: 'Aggiungi i tuoi eventi preferiti con un click e ritrovali sempre.',
         to: '/favorite',
         linkLabel: 'I miei preferiti',
+        bg: mapImg,
     },
     {
         number: '03',
@@ -33,6 +37,7 @@ const HOW_IT_WORKS = [
         description: 'Organizza il tuo raduno e condividilo con la community.',
         to: '/createevent',
         linkLabel: 'Crea un evento',
+        bg: null,
     },
 ]
 
@@ -71,35 +76,45 @@ export default function HomePage() {
                     {HOW_IT_WORKS.map(function(item) {
                         return (
                             <div className="how-card" key={item.number}>
-                                <div className="how-card-number">{item.number}</div>
-                                <ion-icon name={item.icon}></ion-icon>
-                                <h3>{item.title}</h3>
-                                <p>{item.description}</p>
-                                <Link to={item.to} className="how-card-link">
-                                    {item.linkLabel} →
-                                </Link>
+                                {item.bg && (
+                                    <div className="how-card-bg" style={{ backgroundImage: `url(${item.bg})` }} />
+                                )}
+                                <div className="how-card-overlay">
+                                    <div className="how-card-number">{item.number}</div>
+                                    <ion-icon name={item.icon} class="how-icon"></ion-icon>
+                                    <h3>{item.title}</h3>
+                                    <p>{item.description}</p>
+                                    <Link to={item.to} className="how-card-link">
+                                        {item.linkLabel} →
+                                    </Link>
+                                </div>
                             </div>
                         )
                     })}
 
                     {/* Card 04 — Registrazione / Benvenuto */}
                     <div className={`how-card how-card-auth${isLoggedIn ? ' how-card-auth--in' : ''}`}>
-                        <div className="how-card-number">04</div>
-                        <ion-icon name={isLoggedIn ? 'checkmark-circle-outline' : 'person-add-outline'}></ion-icon>
-                        {isLoggedIn ? (
-                            <>
-                                <h3>Bentornato!</h3>
-                                {nameUser && <p className="how-card-welcome">Ciao, <strong>{nameUser}</strong> 👋<br />Sei già parte della community.</p>}
-                                {!nameUser && <p>Sei già parte della community.</p>}
-                                <Link to="/account" className="how-card-link">Il mio account →</Link>
-                            </>
-                        ) : (
-                            <>
-                                <h3>Unisciti</h3>
-                                <p>Crea un account gratuito per salvare eventi e organizzare i tuoi raduni.</p>
-                                <Link to="/registration" className="how-card-link">Registrati →</Link>
-                            </>
-                        )}
+                        <div className="how-card-overlay">
+                            <div className="how-card-number">04</div>
+                            <ion-icon
+                                name={isLoggedIn ? 'checkmark-circle-outline' : 'person-add-outline'}
+                                class={`how-icon${isLoggedIn ? ' how-icon-green' : ''}`}
+                            ></ion-icon>
+                            {isLoggedIn ? (
+                                <>
+                                    <h3>Bentornato!</h3>
+                                    {nameUser && <p className="how-card-welcome">Ciao, <strong>{nameUser}</strong> 👋<br />Sei già parte della community.</p>}
+                                    {!nameUser && <p>Sei già parte della community.</p>}
+                                    <Link to="/account" className="how-card-link">Il mio account →</Link>
+                                </>
+                            ) : (
+                                <>
+                                    <h3>Unisciti</h3>
+                                    <p>Crea un account gratuito per salvare eventi e organizzare i tuoi raduni.</p>
+                                    <Link to="/registration" className="how-card-link">Registrati →</Link>
+                                </>
+                            )}
+                        </div>
                     </div>
 
                 </div>
