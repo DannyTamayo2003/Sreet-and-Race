@@ -52,11 +52,18 @@ Il token JWT viene salvato con la chiave `"token"` (non `"userId"`):
 
 ## Branch di sviluppo
 
-- `danny` — branch principale di sviluppo (lavoro dal PC)
-- `claude/session-context-5u9bhj` — sessione remota Claude (web), riceve i commit poi li pusha su `danny`
+- `danny` — branch principale di sviluppo (lavoro dal PC di Danny)
+- `claude/session-context-5u9bhj` — **unico branch remoto Claude** (non crearne altri); le sessioni Claude lavorano qui e pushano su `danny`
 - `main` — produzione
 
-**Flusso git Claude:** rimanere su `claude/session-context-5u9bhj` → commit con author=Danny, committer=Claude → `git push origin HEAD:danny`  
+**Branch remoti esistenti:** `main`, `danny`, `claude/session-context-5u9bhj`  
+**NON creare nuovi branch Claude** — usare sempre `claude/session-context-5u9bhj` per le sessioni remote.
+
+**Flusso git Claude:**
+1. Lavorare localmente sul branch della sessione corrente (es. `claude/project-aesthetics-review-9u7nkf`)
+2. Pushare su `claude/session-context-5u9bhj`: `git push origin HEAD:claude/session-context-5u9bhj`
+3. Pushare su `danny`: `git push origin HEAD:danny`
+4. Commit con `user.name=Claude`, `user.email=noreply@anthropic.com`  
 **IMPORTANTE:** mai fare `git checkout danny` per committare direttamente.
 
 ## Design System (giugno 2026)
@@ -83,13 +90,20 @@ Il token JWT viene salvato con la chiave `"token"` (non `"userId"`):
 - Rimossa integrazione Eventbrite; rimossi: MockEvents.js, MockEventsComponent.jsx, codice commentato
 - **Restyle UI completo** (dark theme + accenti viola):
   - NavBar → sidebar verticale desktop (220px) + hamburger mobile
-  - HomePage: hero con immagine AI + sezione "Come funziona" (4 card statiche)
-  - Card 04: mostra "Registrati" se guest, "Bentornato + nome" se loggato
+  - HomePage: hero con immagine AI + sezione "Come funziona" (4 card)
+    - Card 01 "Esplora": sfondo `gear-bg.png` (garage neon), icona `search-outline`
+    - Card 02 "Salva": sfondo `map-italy-bg.png` (mappa Italia neon), icona `heart-outline`
+    - Card 03 "Crea": **senza sfondo** (`bg: null`) — immagine `race-bg.png` da aggiungere quando disponibile
+    - Card 04: dinamica — "Registrati" se guest, "Bentornato + nome" con bordo verde se loggato
+    - Icone neon: colore `#ff00e6`, glow `drop-shadow(0 0 8px #ff00e6) drop-shadow(0 0 18px #3c00ff)`
+    - Card 04 loggato: icona verde `#00ff88`, bordo `#00ff88`
   - EventCardComponent: card dark, badge data viola, aspect-ratio 4:5
   - EventDetailPage: hero full-width + layout 2 colonne (testo | info card)
   - AccountPage: dark design system — header profilo (avatar ion-icon, nome, email), info card (nome/email/data nascita), lista eventi con miniatura + bottoni Modifica/Elimina, bottone Logout
   - EditEventPage: form di modifica evento (pre-compilato con dati esistenti)
   - Login/Registration/Contacts/Favorites/EventPage: uniformati al design system
+  - MockEventsStyle.css: card dark `#181818`, titoli `#fff200`, bordo `#3c00ff`
+  - EventPageStyle.css: search input dark `#1a1a1a`, focus border `#7B2FFF`
 
 ### Endpoint API backend
 
@@ -109,6 +123,7 @@ Il token JWT viene salvato con la chiave `"token"` (non `"userId"`):
 | DELETE | /api/user/eventi/:id/preferiti | ✓ | Rimuovi preferito |
 
 ### TODO (prossimi step)
+- [ ] Aggiungere `race-bg.png` in `src/assets/` + import in `HomePage.jsx` per Card 03 "Crea" (`bg: null` → `bg: raceImg`)
 - [ ] Validazione form frontend (lato client, prima dell'invio)
 - [ ] Google Auth (opzionale, da decidere)
 
