@@ -24,9 +24,8 @@ export default function LoginUserComponent() {
       const data = await res.json()
 
       if (res.ok) {
-        // Il backend restituisce { token: "..." }. Lo salviamo in localStorage
-        // con la chiave "token". Viene usato in ogni richiesta che richiede autenticazione.
         localStorage.setItem('token', data.token)
+        if (data.nameUser) localStorage.setItem('nameUser', data.nameUser)
         alert('Login effettuato!')
         navigate('/')
         window.location.reload()

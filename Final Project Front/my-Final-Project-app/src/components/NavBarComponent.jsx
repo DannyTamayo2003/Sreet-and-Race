@@ -59,6 +59,7 @@ export default function NavBarComponent({ menuOpen, setMenuOpen }) {
               className="sidebar-logout"
               onClick={function() {
                 localStorage.removeItem('token')
+                localStorage.removeItem('nameUser')
                 window.location.href = '/'
               }}
             >
@@ -111,6 +112,7 @@ export default function NavBarComponent({ menuOpen, setMenuOpen }) {
             {isLoggedIn && (
               <button className="mobile-menu-link mobile-logout" onClick={function() {
                 localStorage.removeItem('token')
+                localStorage.removeItem('nameUser')
                 setMenuOpen(false)
                 window.location.href = '/'
               }}>

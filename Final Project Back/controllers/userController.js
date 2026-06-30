@@ -50,7 +50,7 @@ exports.loginUtente = async function(req, res) {
     // Il frontend deve includere questo token in ogni richiesta protetta.
     const token = jwt.sign({ userId: utente._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    res.status(200).json({ message: 'Login riuscito!', token: token });
+    res.status(200).json({ message: 'Login riuscito!', token: token, nameUser: utente.nameUser });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

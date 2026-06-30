@@ -111,30 +111,6 @@ h1 em, h1 span.accent {
   box-shadow: 0 4px 28px rgba(123, 47, 255, 0.7);
 }
 
-/* Sezione eventi in evidenza */
-#titleFeaturedEvent {
-  font-size: 1.3rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-align: left;
-  margin-bottom: 20px;
-  color: #ffffff;
-  width: 100%;
-  max-width: 1100px;
-  padding: 0 16px;
-}
-
-#titleFeaturedEvent h2 {
-  color: #ffffff;
-  font-size: 1.3rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-shadow: none;
-  margin: 0;
-}
-
 h2 {
   color: #ffffff;
   text-shadow: none;
@@ -142,113 +118,116 @@ h2 {
   text-transform: uppercase;
 }
 
-.featured-col,
-#eventDetailsContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-}
-
-#mainEventCard {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  margin-top: 0;
-  margin-bottom: 40px;
-  width: 100%;
-}
-
-#eventDetails {
-  color: #ffffff;
-  max-width: 400px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 16px;
-  border-radius: 12px;
-  box-sizing: border-box;
-}
-
-#eventDetails h2 {
-  color: #ffffff;
-  font-size: 1.3rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-  text-shadow: none;
-}
-
-/* Icone navigazione rapida */
-.icon {
-  font-size: 40px;
-  width: 70px;
-  height: 70px;
-  color: #7B2FFF;
-}
-
-#iconContainer {
-  height: 100px;
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto 45px auto;
-  padding: 16px;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 48px;
-}
-
-.containerIconText {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.containerIconText h6 {
-  display: flex;
-  justify-content: center;
-  color: #aaaaaa;
-  font-size: 0.75rem;
-  margin-top: 6px;
-}
-
 span {
   color: #7B2FFF;
   text-shadow: none;
 }
 
-.event-flex-row {
+/* Come funziona */
+.how-it-works {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px 64px 16px;
+  box-sizing: border-box;
+}
+
+.how-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-align: left;
+  margin-bottom: 24px;
+  text-shadow: none;
+}
+
+.how-cards-row {
   display: flex;
   flex-direction: row;
+  gap: 24px;
+}
+
+.how-card {
+  flex: 1;
+  background: #141414;
+  border: 1px solid #1e1e1e;
+  border-radius: 16px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.2s;
+}
+
+.how-card:hover {
+  border-color: #7B2FFF;
+}
+
+.how-card-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #7B2FFF;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  align-items: flex-start;
-  gap: 32px;
-  margin-top: 0;
-  width: 100%;
+  letter-spacing: 0.04em;
+}
+
+.how-card ion-icon {
+  font-size: 2rem;
+  color: #7B2FFF;
+}
+
+.how-card h3 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  margin: 0;
+  text-shadow: none;
+}
+
+.how-card p {
+  font-family: Arial, sans-serif;
+  font-size: 0.85rem;
+  color: #aaaaaa;
+  line-height: 1.6;
+  margin: 0;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.how-card-link {
+  font-size: 0.8rem;
+  color: #7B2FFF !important;
+  text-decoration: none !important;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-top: auto;
+  transition: color 0.2s;
+}
+
+.how-card-link:hover {
+  color: #9b5fff !important;
+}
+
+.how-card-auth--in {
+  border-color: rgba(123, 47, 255, 0.4);
+}
+
+.how-card-welcome strong {
+  color: #ffffff;
+  font-weight: 700;
 }
 
 @media (max-width: 900px) {
-  .event-flex-row,
-  #mainEventCard,
-  .eventListFlex {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 16px;
-  }
-  #iconContainer {
-    flex-direction: column;
-    gap: 16px;
-    height: auto;
-    align-items: center;
-  }
-  .featured-col, #eventDetailsContainer {
-    width: 100%;
-    min-width: 0;
-  }
   #mainContainer {
     padding-left: 8px;
     padding-right: 8px;
@@ -258,6 +237,13 @@ span {
   }
   .hero-overlay {
     padding: 24px 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .how-cards-row {
+    flex-direction: column;
+    gap: 16px;
   }
 }
 
@@ -280,15 +266,6 @@ span {
   }
   .hero-overlay h2 {
     font-size: 1.3rem;
-  }
-  .featured-img {
-    width: 100%;
-    max-width: 350px;
-    height: auto;
-    border-radius: 16px;
-    display: block;
-    margin: 0 auto;
-    object-fit: cover;
   }
 }
 
