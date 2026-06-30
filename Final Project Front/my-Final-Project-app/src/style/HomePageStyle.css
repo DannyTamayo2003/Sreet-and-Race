@@ -40,15 +40,14 @@ h1 em, h1 span.accent {
 
 /* Hero section */
 .hero-section {
-  width: 100%;
-  max-width: 1100px;
-  margin: 40px auto 48px auto;
+  width: calc(100% - 32px);
+  margin: 32px 16px 48px 16px;
   border-radius: 20px;
   overflow: hidden;
   position: relative;
-  min-height: 340px;
+  min-height: 480px;
   display: flex;
-  align-items: flex-end;
+  align-items: stretch;
 }
 
 .hero-bg {
@@ -66,6 +65,11 @@ h1 em, h1 span.accent {
   z-index: 2;
   padding: 40px 48px;
   text-align: left;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0) 100%);
 }
 
 .hero-overlay h2 {
@@ -79,8 +83,9 @@ h1 em, h1 span.accent {
 }
 
 .hero-overlay h2 em {
-  color: #7B2FFF;
+  color: #ff00e6;
   font-style: italic;
+  text-shadow: 0 0 10px #ff00e6, 0 0 22px #3c00ff;
 }
 
 .hero-overlay p {
@@ -94,7 +99,8 @@ h1 em, h1 span.accent {
 
 .hero-cta {
   display: inline-block;
-  background: #7B2FFF;
+  align-self: flex-start;
+  background: #ff00e6;
   color: #ffffff !important;
   padding: 12px 28px;
   border-radius: 8px;
@@ -103,12 +109,12 @@ h1 em, h1 span.accent {
   text-decoration: none !important;
   letter-spacing: 0.05em;
   transition: background 0.2s, box-shadow 0.2s;
-  box-shadow: 0 4px 20px rgba(123, 47, 255, 0.4);
+  box-shadow: 0 4px 20px rgba(255, 0, 230, 0.4);
 }
 
 .hero-cta:hover {
-  background: #9b5fff;
-  box-shadow: 0 4px 28px rgba(123, 47, 255, 0.7);
+  background: #ff33f0;
+  box-shadow: 0 4px 28px rgba(255, 0, 230, 0.7);
 }
 
 h2 {
@@ -125,10 +131,9 @@ span {
 
 /* Come funziona */
 .how-it-works {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 16px 64px 16px;
+  width: calc(100% - 32px);
+  margin: 0 16px 64px 16px;
+  padding-bottom: 16px;
   box-sizing: border-box;
 }
 
@@ -266,11 +271,24 @@ span {
     padding-left: 8px;
     padding-right: 8px;
   }
+  .hero-section {
+    width: calc(100% - 16px);
+    margin: 24px 8px 40px 8px;
+    min-height: 360px;
+  }
+  .how-it-works {
+    width: calc(100% - 16px);
+    margin: 0 8px 48px 8px;
+  }
+  .hero-overlay {
+    width: 65%;
+    padding: 24px 24px;
+  }
   .hero-overlay h2 {
     font-size: 1.6rem;
   }
-  .hero-overlay {
-    padding: 24px 24px;
+  .hero-overlay p {
+    font-size: 0.85rem;
   }
 }
 
@@ -278,6 +296,13 @@ span {
   .how-cards-row {
     flex-direction: column;
     gap: 16px;
+  }
+  .hero-overlay {
+    width: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.1) 100%);
+  }
+  .hero-overlay p {
+    max-width: 100%;
   }
 }
 
@@ -296,10 +321,19 @@ span {
     letter-spacing: 0.06em;
   }
   .hero-section {
-    min-height: 240px;
+    width: calc(100% - 16px);
+    margin: 16px 8px 32px 8px;
+    min-height: 280px;
+    border-radius: 14px;
+  }
+  .hero-overlay {
+    padding: 20px 20px;
   }
   .hero-overlay h2 {
     font-size: 1.3rem;
+  }
+  .hero-overlay p {
+    font-size: 0.8rem;
   }
   .how-icon {
     font-size: 2rem;
@@ -309,5 +343,8 @@ span {
 @media (max-width: 400px) {
   h1 {
     font-size: 1.2rem;
+  }
+  .hero-overlay h2 {
+    font-size: 1.1rem;
   }
 }

@@ -8,13 +8,9 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import '../style/CreateEventStyle.css'
+import { CITTA_PER_REGIONE } from '../data/cittaPerRegione'
 
-const REGIONI_ITALIANE = [
-  'Abruzzo', 'Basilicata', 'Calabria', 'Campania', 'Emilia-Romagna',
-  'Friuli-Venezia Giulia', 'Lazio', 'Liguria', 'Lombardia', 'Marche',
-  'Molise', 'Piemonte', 'Puglia', 'Sardegna', 'Sicilia',
-  'Toscana', 'Trentino-Alto Adige', 'Umbria', "Valle d'Aosta", 'Veneto'
-]
+const REGIONI_ITALIANE = Object.keys(CITTA_PER_REGIONE).sort()
 
 export default function EditEventPage() {
   const navigate = useNavigate()
@@ -35,7 +31,6 @@ export default function EditEventPage() {
 
   const [form, setForm] = useState({
     nameEvent: evento.nameEvent || '',
-    description: evento.description || '',
     data: dataFormattata,
     location: evento.location || '',
     geoRegion: evento.geoRegion || '',
@@ -57,9 +52,14 @@ export default function EditEventPage() {
   }, [imagePreview, imageFile])
 
   function handleChange(e) {
-    setForm({ ...form, [e.target.name]: e.target.value })
-    if (formErrors[e.target.name]) {
-      setFormErrors({ ...formErrors, [e.target.name]: '' })
+    const { name, value } = e.target
+    if (name === 'geoRegion') {
+      setForm({ ...form, geoRegion: value, location: '' })
+    } else {
+      setForm({ ...form, [name]: value })
+    }
+    if (formErrors[name]) {
+      setFormErrors({ ...formErrors, [name]: '' })
     }
   }
 
@@ -86,7 +86,7 @@ export default function EditEventPage() {
 
     const formData = new FormData()
     formData.append('nameEvent', form.nameEvent)
-    formData.append('description', form.description)
+    formData.append('description', form.descrizioneDettagliata.substring(0, 150))
     formData.append('data', dataISO)
     formData.append('location', form.location)
     formData.append('geoRegion', form.geoRegion)
@@ -145,17 +145,6 @@ export default function EditEventPage() {
         {formErrors.nameEvent && <p className="form-error">{formErrors.nameEvent}</p>}
       </div>
 
-      <label>
-        Descrizione: <span className="char-count">{form.description.length}/150</span>
-        <textarea
-          name="description"
-          value={form.description}
-          onChange={handleChange}
-          maxLength={150}
-        />
-      </label>
-      {formErrors.description && <p className="form-error">{formErrors.description}</p>}
-
       <div className="event-form-grid">
         <label>
           Data:
@@ -169,12 +158,19 @@ export default function EditEventPage() {
         </label>
         <label>
           Città:
-          <input
-            type="text"
+          <select
             name="location"
             value={form.location}
             onChange={handleChange}
-          />
+            disabled={!form.geoRegion}
+          >
+            <option value="">
+              {form.geoRegion ? '-- Seleziona città --' : '-- Seleziona prima una regione --'}
+            </option>
+            {(CITTA_PER_REGIONE[form.geoRegion] || []).map(function(citta) {
+              return <option key={citta} value={citta}>{citta}</option>
+            })}
+          </select>
           {formErrors.location && <p className="form-error">{formErrors.location}</p>}
         </label>
         <label>

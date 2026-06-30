@@ -6,20 +6,15 @@
 
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { CITTA_PER_REGIONE } from '../data/cittaPerRegione'
 
-const REGIONI_ITALIANE = [
-  'Abruzzo', 'Basilicata', 'Calabria', 'Campania', 'Emilia-Romagna',
-  'Friuli-Venezia Giulia', 'Lazio', 'Liguria', 'Lombardia', 'Marche',
-  'Molise', 'Piemonte', 'Puglia', 'Sardegna', 'Sicilia',
-  'Toscana', 'Trentino-Alto Adige', 'Umbria', "Valle d'Aosta", 'Veneto'
-]
+const REGIONI_ITALIANE = Object.keys(CITTA_PER_REGIONE).sort()
 
 export default function CreateEvent() {
   const navigate = useNavigate()
 
   const [form, setForm] = useState({
     nameEvent: '',
-    description: '',
     data: '',
     location: '',
     geoRegion: '',
@@ -42,10 +37,15 @@ export default function CreateEvent() {
   }, [imagePreview])
 
   function handleChange(e) {
-    setForm({ ...form, [e.target.name]: e.target.value })
-    // Rimuove l'errore del campo non appena l'utente inizia a modificarlo
-    if (formErrors[e.target.name]) {
-      setFormErrors({ ...formErrors, [e.target.name]: '' })
+    const { name, value } = e.target
+    // Quando cambia la regione, azzera la città perché potrebbe non appartenere alla nuova regione
+    if (name === 'geoRegion') {
+      setForm({ ...form, geoRegion: value, location: '' })
+    } else {
+      setForm({ ...form, [name]: value })
+    }
+    if (formErrors[name]) {
+      setFormErrors({ ...formErrors, [name]: '' })
     }
   }
 
@@ -81,7 +81,7 @@ export default function CreateEvent() {
     // NON impostare Content-Type manualmente: il browser lo fa da solo con il boundary corretto.
     const formData = new FormData()
     formData.append('nameEvent', form.nameEvent)
-    formData.append('description', form.description)
+    formData.append('description', form.descrizioneDettagliata.substring(0, 150))
     formData.append('data', dataISO)
     formData.append('location', form.location)
     formData.append('geoRegion', form.geoRegion)
@@ -138,17 +138,6 @@ export default function CreateEvent() {
         {formErrors.nameEvent && <p className="form-error">{formErrors.nameEvent}</p>}
       </div>
 
-      <label>
-        Descrizione: <span className="char-count">{form.description.length}/150</span>
-        <textarea
-          name="description"
-          value={form.description}
-          onChange={handleChange}
-          maxLength={150}
-        />
-      </label>
-      {formErrors.description && <p className="form-error">{formErrors.description}</p>}
-
       <div className="event-form-grid">
         <label>
           Data:
@@ -162,12 +151,19 @@ export default function CreateEvent() {
         </label>
         <label>
           Città:
-          <input
-            type="text"
+          <select
             name="location"
             value={form.location}
             onChange={handleChange}
-          />
+            disabled={!form.geoRegion}
+          >
+            <option value="">
+              {form.geoRegion ? '-- Seleziona città --' : '-- Seleziona prima una regione --'}
+            </option>
+            {(CITTA_PER_REGIONE[form.geoRegion] || []).map(function(citta) {
+              return <option key={citta} value={citta}>{citta}</option>
+            })}
+          </select>
           {formErrors.location && <p className="form-error">{formErrors.location}</p>}
         </label>
         <label>

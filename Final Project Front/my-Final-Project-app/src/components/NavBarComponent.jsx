@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import '../style/NavBarStyle.css'
-import logo from '../assets/ProvaLogo.png'
-import userImg from '../assets/userimg.jpg'
+import logo from '../assets/Logo.png'
 
 export default function NavBarComponent({ menuOpen, setMenuOpen }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -51,7 +50,7 @@ export default function NavBarComponent({ menuOpen, setMenuOpen }) {
 
         <div className="sidebar-bottom">
           <Link to={isLoggedIn ? '/account' : '/login'} className="sidebar-user">
-            <img src={userImg} alt="User" className="sidebar-user-img" />
+            <ion-icon name="person-outline"></ion-icon>
             <span>{isLoggedIn ? 'Account' : 'Login'}</span>
           </Link>
           {isLoggedIn && (

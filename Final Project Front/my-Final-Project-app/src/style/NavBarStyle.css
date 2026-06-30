@@ -17,10 +17,12 @@
 
 .sidebar-logo {
   padding: 0 20px 32px 20px;
+  display: flex;
+  justify-content: center;
 }
 
 .sidebar-logo-img {
-  width: 80px;
+  width: 140px;
   height: auto;
 }
 
@@ -38,7 +40,7 @@
   gap: 12px;
   padding: 12px 16px;
   border-radius: 10px;
-  color: #888888 !important;
+  color: #ffffff !important;
   text-decoration: none !important;
   font-size: 0.88rem;
   font-family: 'Orbitron', Arial, sans-serif;
@@ -48,20 +50,26 @@
 .sidebar-link ion-icon {
   font-size: 1.3rem;
   min-width: 22px;
+  color: #ff00e6;
+  filter: drop-shadow(0 0 8px #ff00e6) drop-shadow(0 0 18px #3c00ff);
+}
+
+.sidebar-link span {
+  color: #ffffff;
 }
 
 .sidebar-link:hover {
-  background: rgba(123, 47, 255, 0.1);
+  background: rgba(255, 0, 230, 0.1);
   color: #ffffff !important;
 }
 
 .sidebar-link.active {
-  background: rgba(123, 47, 255, 0.18);
+  background: rgba(255, 0, 230, 0.15);
   color: #ffffff !important;
 }
 
 .sidebar-link.active ion-icon {
-  color: #7B2FFF;
+  color: #ffffff;
 }
 
 .sidebar-link.disabled {
@@ -85,11 +93,15 @@
   gap: 12px;
   padding: 10px 16px;
   border-radius: 10px;
-  color: #888888 !important;
+  color: #ffffff !important;
   text-decoration: none !important;
   font-size: 0.88rem;
   font-family: 'Orbitron', Arial, sans-serif;
   transition: background 0.2s, color 0.2s;
+}
+
+.sidebar-user span {
+  color: #ffffff;
 }
 
 .sidebar-user:hover {
@@ -97,11 +109,11 @@
   color: #ffffff !important;
 }
 
-.sidebar-user-img {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
+.sidebar-user ion-icon {
+  font-size: 1.3rem;
+  min-width: 22px;
+  color: #ff00e6;
+  filter: drop-shadow(0 0 8px #ff00e6) drop-shadow(0 0 18px #3c00ff);
 }
 
 .sidebar-logout {
@@ -112,13 +124,17 @@
   border-radius: 10px;
   background: none;
   border: none;
-  color: #888888;
+  color: #ffffff;
   font-size: 0.88rem;
   font-family: 'Orbitron', Arial, sans-serif;
   cursor: pointer;
   width: 100%;
   text-align: left;
   transition: background 0.2s, color 0.2s;
+}
+
+.sidebar-logout span {
+  color: #ffffff;
 }
 
 .sidebar-logout:hover {
@@ -128,6 +144,7 @@
 
 .sidebar-logout ion-icon {
   font-size: 1.3rem;
+  color: #ff4d4d;
 }
 
 /* ========================
@@ -149,7 +166,7 @@
 }
 
 .mobile-logo {
-  width: 48px;
+  width: 72px;
   height: auto;
 }
 
@@ -193,7 +210,7 @@
   gap: 12px;
   padding: 12px 16px;
   border-radius: 10px;
-  color: #cccccc !important;
+  color: #ffffff !important;
   text-decoration: none !important;
   font-size: 0.9rem;
   font-family: 'Orbitron', Arial, sans-serif;
@@ -213,6 +230,12 @@
 .mobile-menu-link ion-icon {
   font-size: 1.2rem;
   min-width: 20px;
+  color: #ff00e6;
+  filter: drop-shadow(0 0 8px #ff00e6) drop-shadow(0 0 18px #3c00ff);
+}
+
+.mobile-menu-link span {
+  color: #ffffff;
 }
 
 .mobile-menu-link.disabled {

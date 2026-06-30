@@ -88,16 +88,11 @@ export default function EventDetailPage() {
       {/* BODY */}
       <div className="ed-body">
 
-        {/* COLONNA SINISTRA — Descrizioni */}
+        {/* COLONNA SINISTRA — Descrizione */}
         <div className="ed-col-main">
-          <div className="ed-section">
-            <h3 className="ed-section-title">Informazioni</h3>
-            <p className="ed-description">{event.description}</p>
-          </div>
-
           {event.descrizioneDettagliata && (
             <div className="ed-section">
-              <h3 className="ed-section-title">Descrizione dettagliata</h3>
+              <h3 className="ed-section-title">Descrizione</h3>
               <p className="ed-description">{event.descrizioneDettagliata}</p>
             </div>
           )}
