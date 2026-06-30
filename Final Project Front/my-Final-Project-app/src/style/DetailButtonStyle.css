@@ -1,5 +1,5 @@
 .detailButton {
-  background: #7B2FFF;
+  background: #ff00e6;
   color: #ffffff;
   border: none;
   border-radius: 8px;
@@ -9,7 +9,7 @@
   cursor: pointer;
   transition: background 0.2s, box-shadow 0.2s;
   margin: 0;
-  box-shadow: 0 2px 12px rgba(123, 47, 255, 0.3);
+  box-shadow: 0 2px 12px rgba(255, 0, 230, 0.3);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   display: block;
@@ -17,6 +17,6 @@
 }
 
 .detailButton:hover {
-  background: #9b5fff;
-  box-shadow: 0 2px 20px rgba(123, 47, 255, 0.5);
+  background: #ff33f0;
+  box-shadow: 0 2px 20px rgba(255, 0, 230, 0.5);
 }

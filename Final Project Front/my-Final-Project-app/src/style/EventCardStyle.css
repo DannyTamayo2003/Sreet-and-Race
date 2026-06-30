@@ -9,9 +9,9 @@
 }
 
 .ec-card:hover {
-  border-color: #7B2FFF;
+  border-color: #ff00e6;
   transform: translateY(-4px);
-  box-shadow: 0 0 24px rgba(123, 47, 255, 0.25);
+  box-shadow: 0 0 24px rgba(255, 0, 230, 0.25);
 }
 
 .ec-image-wrapper {
@@ -32,12 +32,12 @@
   position: absolute;
   top: 12px;
   left: 12px;
-  background: #7B2FFF;
+  background: #ff00e6;
   border-radius: 8px;
   padding: 6px 10px;
   text-align: center;
   min-width: 44px;
-  box-shadow: 0 2px 12px rgba(123, 47, 255, 0.5);
+  box-shadow: 0 2px 12px rgba(255, 0, 230, 0.5);
 }
 
 .ec-date-day {

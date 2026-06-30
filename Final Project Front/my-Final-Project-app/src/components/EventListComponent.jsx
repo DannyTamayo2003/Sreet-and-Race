@@ -12,7 +12,7 @@ import '../style/EventPageStyle.css'
 
 const EVENTS_PER_PAGE = 9
 
-export default function EventListComponent({ search = "" }) {
+export default function EventListComponent({ search = "", regionFilter = "", sortOrder = "date-desc" }) {
   const [rawEvents, setRawEvents] = useState([])   // tutti gli eventi caricati dal backend
   const [loading, setLoading] = useState(false)    // true mentre la fetch è in corso
   const [error, setError] = useState('')           // messaggio di errore se la fetch fallisce
@@ -68,19 +68,29 @@ export default function EventListComponent({ search = "" }) {
     })
   }, [])
 
-  // Quando cambia la ricerca, torna sempre alla prima pagina
+  // Quando cambia un filtro o l'ordinamento, torna alla prima pagina
   useEffect(function() {
     setCurrentPage(1)
-  }, [search])
+  }, [search, regionFilter, sortOrder])
 
-  // Filtra localmente: cerca nel nome evento e nella città
+  // Filtra per testo + regione, poi ordina
   const normalizedSearch = search.trim().toLowerCase()
-  const filteredEvents = rawEvents.filter(function(event) {
-    if (!normalizedSearch) return true
-    const name = (event.nameEvent || '').toLowerCase()
-    const location = (event.location || '').toLowerCase()
-    return name.includes(normalizedSearch) || location.includes(normalizedSearch)
-  })
+  const filteredEvents = rawEvents
+    .filter(function(event) {
+      if (normalizedSearch) {
+        const name = (event.nameEvent || '').toLowerCase()
+        const location = (event.location || '').toLowerCase()
+        if (!name.includes(normalizedSearch) && !location.includes(normalizedSearch)) return false
+      }
+      if (regionFilter && event.geoRegion !== regionFilter) return false
+      return true
+    })
+    .sort(function(a, b) {
+      if (sortOrder === 'date-desc') return new Date(b.data) - new Date(a.data)
+      if (sortOrder === 'date-asc')  return new Date(a.data) - new Date(b.data)
+      if (sortOrder === 'name-asc')  return (a.nameEvent || '').localeCompare(b.nameEvent || '')
+      return 0
+    })
 
   // Calcola il numero totale di pagine e gli eventi da mostrare nella pagina corrente
   const totalPages = Math.ceil(filteredEvents.length / EVENTS_PER_PAGE)
@@ -89,13 +99,24 @@ export default function EventListComponent({ search = "" }) {
 
   return (
     <>
+      {!loading && !error && (
+        <p className="ep-result-count">
+          {filteredEvents.length} {filteredEvents.length === 1 ? 'evento trovato' : 'eventi trovati'}
+        </p>
+      )}
+
       <div className="eventListFlex">
         {loading && <p>Caricamento eventi...</p>}
         {!loading && error && <p>Errore: {error}</p>}
         {!loading && !error && eventsOnPage.map(function(event) {
           return <EventCardComponent key={event._id} event={event} favoriteIds={favoriteIds} />
         })}
-        {!loading && !error && filteredEvents.length === 0 && <p>Nessun evento trovato.</p>}
+        {!loading && !error && filteredEvents.length === 0 && (
+          <div className="ep-empty">
+            <ion-icon name="calendar-outline"></ion-icon>
+            <p>Nessun evento trovato.</p>
+          </div>
+        )}
       </div>
 
       {/* Mostra i controlli di paginazione solo se ci sono più pagine */}

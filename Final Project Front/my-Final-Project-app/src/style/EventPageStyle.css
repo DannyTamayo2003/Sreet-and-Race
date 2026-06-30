@@ -1,25 +1,40 @@
-.event-page-title {
+/* Banner */
+.ep-banner {
+  width: 100%;
+  padding: 40px 24px 32px 24px;
+  background: linear-gradient(135deg, #141414 0%, #0d0d0d 100%);
+  border-bottom: 2px solid #ff00e6;
+  text-align: center;
+  box-shadow: 0 4px 24px rgba(255, 0, 230, 0.08);
+  box-sizing: border-box;
+}
+
+.ep-banner-title {
   font-family: 'Orbitron', Arial, sans-serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  font-size: 2rem;
+  font-weight: 900;
   color: #ffffff;
-  text-align: center;
-  margin: 32px 0 24px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  text-shadow: 0 0 20px rgba(255, 0, 230, 0.3);
+  margin: 0 0 6px 0;
 }
 
-.eventListFlex {
+.ep-banner-sub {
+  color: #888888;
+  font-size: 0.85rem;
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+/* Controlli: search + regione sulla stessa riga */
+.ep-controls {
   display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
+  gap: 12px;
   justify-content: center;
-  align-items: flex-start;
-}
-
-.event-search-container {
-  margin: 0 auto 24px auto;
-  text-align: center;
+  flex-wrap: wrap;
+  margin: 28px auto 12px auto;
+  padding: 0 16px;
 }
 
 .event-search-input {
@@ -30,8 +45,7 @@
   color: #ffffff;
   font-size: 0.9rem;
   font-family: 'Orbitron', Arial, sans-serif;
-  width: 60%;
-  max-width: 400px;
+  width: 260px;
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
@@ -46,6 +60,100 @@
   box-shadow: 0 0 0 2px rgba(255, 0, 230, 0.2);
 }
 
+.ep-region-select {
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: 1px solid #1e1e1e;
+  background: #141414;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-family: 'Orbitron', Arial, sans-serif;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  appearance: none;
+  cursor: pointer;
+}
+
+.ep-region-select:focus {
+  border-color: #ff00e6;
+  box-shadow: 0 0 0 2px rgba(255, 0, 230, 0.2);
+}
+
+.ep-region-select option {
+  background: #141414;
+  color: #ffffff;
+}
+
+/* Bottoni ordinamento */
+.ep-sort-row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 auto 20px auto;
+}
+
+.ep-sort-btn {
+  padding: 6px 16px;
+  border: 1px solid #1e1e1e;
+  border-radius: 6px;
+  background: transparent;
+  color: #aaaaaa;
+  font-size: 0.78rem;
+  font-family: 'Orbitron', Arial, sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.04em;
+}
+
+.ep-sort-btn:hover {
+  border-color: #ff00e6;
+  color: #ff00e6;
+}
+
+.ep-sort-btn--active {
+  border-color: #ff00e6;
+  background: rgba(255, 0, 230, 0.1);
+  color: #ff00e6;
+}
+
+/* Contatore risultati */
+.ep-result-count {
+  text-align: center;
+  font-size: 0.78rem;
+  color: #555555;
+  font-family: Arial, sans-serif;
+  margin: 0 0 20px 0;
+}
+
+/* Empty state */
+.ep-empty {
+  text-align: center;
+  color: #555555;
+  padding: 48px 0;
+  width: 100%;
+}
+
+.ep-empty ion-icon {
+  font-size: 2.5rem;
+  display: block;
+  margin: 0 auto 10px auto;
+}
+
+.ep-empty p {
+  font-family: Arial, sans-serif;
+  font-size: 0.95rem;
+}
+
+/* Griglia card */
+.eventListFlex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Paginazione — fucsia */
 .pagination-controls {
   display: flex;
   justify-content: center;
@@ -56,10 +164,10 @@
 
 .pagination-btn {
   padding: 8px 22px;
-  border: 1px solid #7B2FFF;
+  border: 1px solid #ff00e6;
   border-radius: 8px;
   background-color: transparent;
-  color: #7B2FFF;
+  color: #ff00e6;
   font-size: 0.9rem;
   cursor: pointer;
   transition: background-color 0.2s, color 0.2s;
@@ -67,8 +175,8 @@
 }
 
 .pagination-btn:hover:not(:disabled) {
-  background-color: #7B2FFF;
-  color: #fff;
+  background-color: #ff00e6;
+  color: #ffffff;
 }
 
 .pagination-btn:disabled {
@@ -80,4 +188,11 @@
 .pagination-info {
   font-size: 0.85rem;
   color: #666;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .ep-banner-title { font-size: 1.4rem; }
+  .ep-controls { flex-direction: column; align-items: center; }
+  .event-search-input, .ep-region-select { width: 90%; max-width: 340px; }
 }
