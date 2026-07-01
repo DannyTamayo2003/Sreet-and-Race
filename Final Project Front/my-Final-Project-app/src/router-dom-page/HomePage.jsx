@@ -18,21 +18,21 @@ const HOW_IT_WORKS = [
         number: '01',
         icon: 'search-outline',
         title: 'Esplora',
-        description: 'Cerca e filtra eventi automotive nella tua zona.',
+        description: 'Pensata per trovare eventi in tutta Italia: cerca quello più vicino a te.',
         bg: mapImg,
     },
     {
         number: '02',
         icon: 'heart-outline',
         title: 'Salva',
-        description: 'Aggiungi i tuoi eventi preferiti con un click e ritrovali sempre.',
+        description: 'Aggiungi i tuoi eventi preferiti con un click, prima che scadano o non siano più disponibili.',
         bg: heartImg,
     },
     {
         number: '03',
         icon: 'add-circle-outline',
         title: 'Crea',
-        description: 'Organizza il tuo raduno e condividilo con la community.',
+        description: 'Organizza il tuo evento e condividilo con la community.',
         bg: gearImg,
     },
 ]
@@ -60,7 +60,7 @@ export default function HomePage() {
                 />
                 <div className="hero-overlay">
                     <h2>VIVI LA PASSIONE.<br /><em>OGNI STRADA, OGNI EVENTO.</em></h2>
-                    <p>Dalla pista alla strada, connettiti con gli appassionati automotive della tua zona. Scopri raduni, car meeting e gare — o crea il tuo evento e raduna la community.</p>
+                    <p>Dalla pista alla strada, connettiti con gli appassionati della tua zona. Organizza, crea e scopri eventi. Sei tu a dar vita a questa passione.</p>
                     <Link to="/eventpage" className="hero-cta">Scopri gli eventi</Link>
                 </div>
             </div>

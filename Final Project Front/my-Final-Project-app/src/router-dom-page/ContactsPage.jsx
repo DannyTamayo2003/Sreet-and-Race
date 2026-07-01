@@ -11,13 +11,13 @@ export default function ContactsPage() {
           <div className="ct-ig-icon-wrap">
             <ion-icon name="logo-instagram" class="ct-ig-icon"></ion-icon>
           </div>
-          <div className="ct-ig-handle">@streetandrace</div>
+          <div className="ct-ig-handle">@streetandrace_</div>
           <p className="ct-ig-desc">
-            Post, stories e reel sugli eventi automobilistici italiani.<br />
-            Car meeting, raduni, motorsport e molto altro.
+            Scrivici per segnalazioni, problemi o informazioni.<br />
+            Seguici se vuoi restare aggiornato, oppure contattaci direttamente in DM.
           </p>
           <a
-            href="https://instagram.com/streetandrace"
+            href="https://instagram.com/streetandrace_"
             target="_blank"
             rel="noopener noreferrer"
             className="ct-ig-btn"
@@ -31,11 +31,12 @@ export default function ContactsPage() {
         <div className="ct-about-card">
           <div className="ct-about-label">Chi siamo</div>
           <p className="ct-about-text">
-            Street &amp; Race è una piattaforma per la scoperta e la gestione di eventi automobilistici in Italia.
-            Gli utenti possono creare, scoprire e salvare car meeting, raduni e eventi motorsport nella propria zona.
+            Street &amp; Race nasce come prototipo di una web app pensata per unire in un unico posto
+            tutti gli eventi automobilistici d'Italia, principalmente raduni, car meeting e appuntamenti motorsport.
+            Ogni evento è creato direttamente dagli utenti della community: è il vostro contributo a tenerla viva.
           </p>
           <div className="ct-about-meta">
-            <span className="ct-about-badge">Progetto Demo</span>
+            <span className="ct-about-badge">Progetto Beta</span>
             <span className="ct-about-badge">v1.0 — 2026</span>
           </div>
         </div>

@@ -37,7 +37,7 @@ const BANNER_CONFIG = {
   '/registration': { title: 'Registrati',      subtitle: 'Crea il tuo account gratuitamente' },
   '/createevent':  { title: 'Crea Evento',     subtitle: 'Condividi il tuo evento con la community' },
   '/account':      { title: 'Il mio Account',  subtitle: 'Gestisci il tuo profilo e i tuoi eventi' },
-  '/contacts':     { title: 'Contatti',        subtitle: 'Seguici su Instagram per restare aggiornato' },
+  '/contacts':     { title: 'Contatti',        subtitle: 'Il modo più veloce per contattarci' },
 }
 
 function getBannerData(pathname) {
