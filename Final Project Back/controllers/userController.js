@@ -11,7 +11,6 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
-require('dotenv').config();
 
 // REGISTRAZIONE: crea un nuovo utente nel database con la password criptata
 exports.createUtente = async function(req, res) {
@@ -38,7 +37,8 @@ exports.createUtente = async function(req, res) {
     });
     await utente.save();
 
-    res.status(201).json(utente);
+    // Risposta senza password: non esporre mai il hash bcrypt al client
+    res.status(201).json({ _id: utente._id, nameUser: utente.nameUser, emailUser: utente.emailUser });
   } catch (err) {
     // Codice 11000 = email duplicata (violazione constraint unique)
     if (err.code === 11000) {

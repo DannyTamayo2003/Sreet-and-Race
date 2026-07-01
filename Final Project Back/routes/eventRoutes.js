@@ -17,11 +17,11 @@ const { creazioneEventoRules } = require('../validators/eventValidators.js');
 const upload = multer({
   storage,
   fileFilter: function(req, file, cb) {
-    const allowedMimes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+    const allowedMimes = ['image/jpeg', 'image/png', 'image/webp'];
     if (allowedMimes.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      cb(new Error('Formato file non supportato. Carica un\'immagine (jpg, png, webp, gif).'));
+      cb(new Error('Formato file non supportato. Carica un\'immagine (jpg, png, webp).'));
     }
   },
   limits: { fileSize: 5 * 1024 * 1024 } // 5MB massimo

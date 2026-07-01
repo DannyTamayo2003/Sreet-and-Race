@@ -14,7 +14,7 @@ const eventSchema = new mongoose.Schema({
     image: { type: String },                            // URL dell'immagine dell'evento (opzionale)
     nameEvent: { type: String, required: true },        // Nome dell'evento (obbligatorio)
     location: { type: String, required: true },         // Città o luogo dell'evento (obbligatorio)
-    data: { type: Date, required: true },               // Data dell'evento (obbligatorio)
+    data: { type: Date, required: true, index: true },   // Data dell'evento (obbligatorio)
     description: { type: String, required: true },      // Descrizione breve (obbligatorio)
 
     // Campi opzionali per maggiori dettagli sull'evento

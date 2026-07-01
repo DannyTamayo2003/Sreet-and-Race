@@ -6,15 +6,9 @@
  */
 
 const Evento = require('../models/event.js');
+const Utente = require('../models/user.js');
 const { cloudinary } = require('../config/cloudinary.js');
-
-function extractPublicId(cloudinaryUrl) {
-  const parts = cloudinaryUrl.split('/');
-  const basename = parts[parts.length - 1];
-  const nameParts = basename.split('.');
-  const nameWithoutExt = nameParts.length > 1 ? nameParts.slice(0, -1).join('.') : basename;
-  return `street-and-race/${nameWithoutExt}`;
-}
+const { extractPublicId } = require('../utils/cloudinaryUtils.js');
 
 async function cleanupExpiredEvents() {
   try {
@@ -39,6 +33,12 @@ async function cleanupExpiredEvents() {
     // Elimina esattamente gli stessi eventi di cui abbiamo già rimosso le immagini
     const ids = eventiScaduti.map(function(ev) { return ev._id });
     await Evento.deleteMany({ _id: { $in: ids } });
+
+    // Rimuove gli eventi scaduti dai preferiti di tutti gli utenti che li avevano salvati
+    await Utente.updateMany(
+      {},
+      { $pull: { eventFavorite: { _id: { $in: ids } } } }
+    );
 
     console.log(`[cleanup] Eliminati ${eventiScaduti.length} eventi scaduti.`);
   } catch (err) {

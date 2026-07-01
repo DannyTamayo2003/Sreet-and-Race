@@ -6,7 +6,12 @@
 
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
-require('dotenv').config();
+
+// Fail fast: se mancano le credenziali Cloudinary il server non parte invece di crashare al primo upload
+const requiredVars = ['CLOUDINARY_CLOUD_NAME', 'CLOUDINARY_API_KEY', 'CLOUDINARY_API_SECRET'];
+requiredVars.forEach(function(key) {
+  if (!process.env[key]) throw new Error(`Variabile d'ambiente mancante: ${key}`);
+});
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,

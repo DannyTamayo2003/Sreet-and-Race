@@ -1,31 +1,44 @@
 /*
- * EventListComponent.jsx — Lista eventi
- * Carica tutti gli eventi dal backend una sola volta al montaggio del componente.
- * Filtra i risultati localmente in base al testo di ricerca passato come prop,
- * senza fare nuove chiamate al server ad ogni ricerca.
- * Mostra 9 eventi per pagina con bottoni di navigazione.
+ * EventListComponent.jsx — Lista eventi con paginazione server-side
+ * Passa filtri e pagina corrente come query params al backend.
+ * Il backend filtra, ordina e restituisce solo gli eventi della pagina richiesta.
+ * Mostra 20 eventi per pagina.
  */
 
 import React, { useEffect, useState } from 'react'
 import EventCardComponent from './EventCardComponent'
 import '../style/EventPageStyle.css'
 
-const EVENTS_PER_PAGE = 9
+const EVENTS_PER_PAGE = 20
 
 export default function EventListComponent({ search = "", regionFilter = "", sortOrder = "date-desc", onResultCount }) {
-  const [rawEvents, setRawEvents] = useState([])   // tutti gli eventi caricati dal backend
-  const [loading, setLoading] = useState(false)    // true mentre la fetch è in corso
-  const [error, setError] = useState('')           // messaggio di errore se la fetch fallisce
+  const [eventi, setEventi] = useState([])
+  const [totalPages, setTotalPages] = useState(1)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   // null = caricamento in corso, Set = dati pronti (anche Set vuoto se non loggato)
   const [favoriteIds, setFavoriteIds] = useState(null)
 
+  // Quando cambiano i filtri, torna sempre alla prima pagina
+  useEffect(function() {
+    setCurrentPage(1)
+  }, [search, regionFilter, sortOrder])
+
+  // Fetch degli eventi al backend: riparte ogni volta che cambiano filtri o pagina
   useEffect(function() {
     setLoading(true)
     setError('')
 
-    // Carica tutti gli eventi dal backend
-    fetch(`${import.meta.env.VITE_API_URL}/api/eventi`)
+    const params = new URLSearchParams({
+      page: currentPage,
+      limit: EVENTS_PER_PAGE,
+      sort: sortOrder
+    })
+    if (search.trim()) params.set('search', search.trim())
+    if (regionFilter) params.set('region', regionFilter)
+
+    fetch(`${import.meta.env.VITE_API_URL}/api/eventi?${params.toString()}`)
       .then(function(res) {
         if (!res.ok) {
           return res.json().then(function(errPayload) {
@@ -35,16 +48,18 @@ export default function EventListComponent({ search = "", regionFilter = "", sor
         return res.json()
       })
       .then(function(data) {
-        setRawEvents(Array.isArray(data) ? data : [])
+        setEventi(Array.isArray(data.eventi) ? data.eventi : [])
+        setTotalPages(data.totalPages || 1)
+        if (onResultCount) onResultCount(data.total || 0)
       })
       .catch(function(err) {
         setError(err.message)
-        setRawEvents([])
+        setEventi([])
       })
       .finally(function() {
         setLoading(false)
       })
-  }, [])
+  }, [search, regionFilter, sortOrder, currentPage])
 
   // Carica i preferiti una sola volta per tutta la lista, evitando N fetch identiche nelle card
   useEffect(function() {
@@ -68,49 +83,15 @@ export default function EventListComponent({ search = "", regionFilter = "", sor
     })
   }, [])
 
-  // Quando cambia un filtro o l'ordinamento, torna alla prima pagina
-  useEffect(function() {
-    setCurrentPage(1)
-  }, [search, regionFilter, sortOrder])
-
-  // Filtra per testo + regione, poi ordina
-  const normalizedSearch = search.trim().toLowerCase()
-  const filteredEvents = rawEvents
-    .filter(function(event) {
-      if (normalizedSearch) {
-        const name = (event.nameEvent || '').toLowerCase()
-        const location = (event.location || '').toLowerCase()
-        if (!name.includes(normalizedSearch) && !location.includes(normalizedSearch)) return false
-      }
-      if (regionFilter && event.geoRegion !== regionFilter) return false
-      return true
-    })
-    .sort(function(a, b) {
-      if (sortOrder === 'date-desc') return new Date(b.data) - new Date(a.data)
-      if (sortOrder === 'date-asc')  return new Date(a.data) - new Date(b.data)
-      if (sortOrder === 'name-asc')  return (a.nameEvent || '').localeCompare(b.nameEvent || '')
-      return 0
-    })
-
-  // Notifica EventPage del numero di risultati (dopo che filteredEvents è calcolato)
-  useEffect(function() {
-    if (onResultCount) onResultCount(filteredEvents.length)
-  }, [filteredEvents.length])
-
-  // Calcola il numero totale di pagine e gli eventi da mostrare nella pagina corrente
-  const totalPages = Math.ceil(filteredEvents.length / EVENTS_PER_PAGE)
-  const startIndex = (currentPage - 1) * EVENTS_PER_PAGE
-  const eventsOnPage = filteredEvents.slice(startIndex, startIndex + EVENTS_PER_PAGE)
-
   return (
     <>
       <div className="eventListFlex">
         {loading && <p>Caricamento eventi...</p>}
         {!loading && error && <p>Errore: {error}</p>}
-        {!loading && !error && eventsOnPage.map(function(event) {
+        {!loading && !error && eventi.map(function(event) {
           return <EventCardComponent key={event._id} event={event} favoriteIds={favoriteIds} />
         })}
-        {!loading && !error && filteredEvents.length === 0 && (
+        {!loading && !error && eventi.length === 0 && (
           <div className="ep-empty">
             <ion-icon name="calendar-outline"></ion-icon>
             <p>Nessun evento trovato.</p>

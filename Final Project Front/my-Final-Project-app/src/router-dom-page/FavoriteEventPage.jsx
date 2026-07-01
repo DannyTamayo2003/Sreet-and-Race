@@ -4,7 +4,7 @@
  * Richiede autenticazione: se l'utente non è loggato, mostra un messaggio di errore.
  */
 
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect } from 'react'
 import EventCardComponent from '../components/EventCardComponent'
 import '../style/FavoriteEventPageStyle.css'
 

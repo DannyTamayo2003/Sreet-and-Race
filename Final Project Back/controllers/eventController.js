@@ -5,17 +5,10 @@
  */
 
 const Evento = require('../models/event.js');
+const Utente = require('../models/user.js');
 const { cloudinary } = require('../config/cloudinary.js');
 const { validationResult } = require('express-validator');
-
-// Estrae il public_id Cloudinary da un URL completo (gestisce nomi con più punti)
-function extractPublicId(cloudinaryUrl) {
-  const parts = cloudinaryUrl.split('/');
-  const basename = parts[parts.length - 1];
-  const nameParts = basename.split('.');
-  const nameWithoutExt = nameParts.length > 1 ? nameParts.slice(0, -1).join('.') : basename;
-  return `street-and-race/${nameWithoutExt}`;
-}
+const { extractPublicId } = require('../utils/cloudinaryUtils.js');
 
 // CREA EVENTO: salva un nuovo evento nel database
 exports.createEvento = async function(req, res) {
@@ -70,7 +63,7 @@ exports.updateEvento = async function(req, res) {
     }
 
     // Whitelist dei campi modificabili: impedisce che campi come creatorId vengano sovrascritti
-    const campiConsentiti = ['nameEvent', 'description', 'data', 'location', 'geoRegion', 'orario', 'descrizioneDettagliata', 'organizzatore', 'via'];
+    const campiConsentiti = ['nameEvent', 'description', 'data', 'location', 'geoRegion', 'geoProvince', 'orario', 'descrizioneDettagliata', 'organizzatore', 'via'];
     const aggiornamenti = {};
     campiConsentiti.forEach(function(campo) {
       if (req.body[campo] !== undefined) aggiornamenti[campo] = req.body[campo];
@@ -110,17 +103,51 @@ exports.deleteEvento = async function(req, res) {
     }
 
     await Evento.findByIdAndDelete(req.params.id);
+
+    // Rimuove l'evento dai preferiti di tutti gli utenti che lo avevano salvato
+    await Utente.updateMany(
+      {},
+      { $pull: { eventFavorite: { _id: evento._id } } }
+    );
+
     res.json({ message: 'Evento eliminato con successo' });
   } catch (err) {
     res.status(500).json({ message: 'Errore interno del server' });
   }
 };
 
-// LEGGI TUTTI GLI EVENTI: restituisce la lista completa degli eventi nel database
+// LEGGI TUTTI GLI EVENTI: supporta paginazione, ricerca e ordinamento via query params
+// ?page=1&limit=20&search=testo&region=Lombardia&sort=date-desc|date-asc|name-asc
 exports.getEventi = async function(req, res) {
   try {
-    const eventi = await Evento.find();
-    res.json(eventi);
+    const page = Math.max(1, parseInt(req.query.page) || 1);
+    const limit = Math.min(50, Math.max(1, parseInt(req.query.limit) || 20));
+    const search = (req.query.search || '').trim();
+    const region = (req.query.region || '').trim();
+    const sort = req.query.sort || 'date-desc';
+
+    const filtro = {};
+    if (search) {
+      filtro.$or = [
+        { nameEvent: { $regex: search, $options: 'i' } },
+        { location: { $regex: search, $options: 'i' } }
+      ];
+    }
+    if (region) {
+      filtro.geoRegion = region;
+    }
+
+    let ordinamento = { data: -1 };
+    if (sort === 'date-asc') ordinamento = { data: 1 };
+    else if (sort === 'name-asc') ordinamento = { nameEvent: 1 };
+
+    const total = await Evento.countDocuments(filtro);
+    const eventi = await Evento.find(filtro)
+      .sort(ordinamento)
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    res.json({ eventi, total, page, totalPages: Math.ceil(total / limit) });
   } catch (err) {
     res.status(500).json({ message: 'Errore interno del server' });
   }
