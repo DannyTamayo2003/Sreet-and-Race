@@ -1,23 +1,20 @@
-h1 {
+#mainContainer h1 {
   color: #ffffff;
-  font-size: 3rem;
+  font-size: 2.8rem;
   font-weight: 900;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  text-shadow:
-    2px 2px 0 #b01919,
-    4px 4px 8px #ff00cc,
-    0 0 24px #3c00ff;
+  text-shadow: 0 0 30px rgba(123, 47, 255, 0.6);
   user-select: none;
-  margin-bottom: 24px;
+  margin-bottom: 8px;
   text-align: center;
 }
 
-#Logo {
-  width: 400px;
-  height: 400px;
-  margin: 20px auto;
+#mainContainer h1 em, #mainContainer h1 span.accent {
+  color: #7B2FFF;
+  font-style: italic;
 }
+
 #mainContent {
   width: 100%;
   min-height: 100vh;
@@ -25,11 +22,11 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* o center se vuoi tutto centrato verticalmente */
-  padding-top: 100px; /* o l'altezza della tua navbar fissa */
-  background: transparent; /* o il colore di sfondo che preferisci */
+  justify-content: flex-start;
+  background: transparent;
   overflow-x: hidden;
 }
+
 #mainContainer {
   display: flex;
   flex-direction: column;
@@ -41,160 +38,289 @@ h1 {
   text-align: center;
 }
 
-.featured-col,
-#eventDetailsContainer {
+/* Hero section */
+.hero-section {
+  width: calc(100% - 32px);
+  margin: 32px 16px 48px 16px;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  min-height: 480px;
+  display: flex;
+  align-items: stretch;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.45);
+}
+
+.hero-overlay {
+  position: relative;
+  z-index: 2;
+  padding: 40px 48px;
+  text-align: left;
+  width: 50%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0) 100%);
 }
 
-#titleFeaturedEvent {
-  text-shadow:
-    2px 2px 0 #b01919,
-    4px 4px 8px #ff00cc,
-    0 0 24px #3c00ff;
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+.hero-overlay h2 {
+  font-size: 2.4rem;
+  font-weight: 900;
   text-transform: uppercase;
-  text-align: center;
-  margin-bottom: 24px;
-}
-
-h2 {
-  color: #fff200;
-  text-shadow:
-    2px 2px 0 #b01919,
-    4px 4px 8px #ff00cc,
-    0 0 24px #3c00ff;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-
-}
-
-
-#mainEventCard {
-
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  margin-top: 40px;
-  margin-bottom: 40px;
-
-}
-
-#eventDetails {
   color: #ffffff;
-  max-width: 400px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 16px;
-  border-radius: 12px;
-  box-sizing: border-box;
+  line-height: 1.1;
+  margin-bottom: 12px;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.7);
 }
 
-#eventDetails h2 {
-  color: #ffffff;
-  text-shadow:
-    2px 2px 0 #b01919,
-    4px 4px 8px #ff00cc,
-    0 0 24px #3c00ff;
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-}
-
-.icon {
-  font-size: 48px;
-  width: 80px;
-  height: 80px;
- 
+.hero-overlay h2 em {
   color: #ff00e6;
+  font-style: italic;
+  text-shadow: 0 0 10px #ff00e6, 0 0 22px #3c00ff;
 }
 
-#iconContainer {
-  height: 100px;
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  margin-bottom: 45px;
-  padding: 16px;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center; 
-  gap: 32px;          
+.hero-overlay p {
+  color: #cccccc;
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+  max-width: 380px;
+  font-family: Arial, sans-serif;
+  letter-spacing: 0;
 }
 
-.containerIconText {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.hero-cta {
+  display: inline-block;
+  align-self: flex-start;
+  background: #ff00e6;
+  color: #ffffff !important;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none !important;
+  letter-spacing: 0.05em;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(255, 0, 230, 0.4);
 }
 
-.containerIconText h6 {
-  display: flex;
-  justify-content: center;
+.hero-cta:hover {
+  background: #ff33f0;
+  box-shadow: 0 4px 28px rgba(255, 0, 230, 0.7);
 }
 
-span {
+#mainContainer h2 {
   color: #ffffff;
-  text-shadow:
-    2px 2px 0 #000000,
-    4px 4px 8px #ff00cc,
-    0 0 24px #ffffff;
+  text-shadow: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-
-.featured-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
+/* Come funziona */
+.how-it-works {
+  width: calc(100% - 32px);
+  margin: 0 16px 64px 16px;
+  padding-bottom: 16px;
+  box-sizing: border-box;
 }
 
-/* Flex container per mettere card e dettagli in linea */
-.event-flex-row {
+.how-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-align: left;
+  margin-bottom: 24px;
+  text-shadow: none;
+}
+
+.how-cards-row {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 32px;
-  /* spazio tra card e dettagli */
-  margin-top: 24px;
+  gap: 24px;
 }
 
-/* Responsive: su schermi piccoli, metti in colonna */
+.how-card {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: #141414;
+  border: 1px solid #1e1e1e;
+  border-radius: 16px;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.how-card:hover {
+  border-color: #7B2FFF;
+  transform: translateY(-4px);
+  box-shadow: 0 0 24px rgba(123, 47, 255, 0.25);
+}
+
+/* Immagine di sfondo card */
+.how-card-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.35) blur(1px);
+  z-index: 0;
+}
+
+/* Overlay contenuto sopra l'immagine */
+.how-card-overlay {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 28px 24px;
+}
+
+.how-card-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #7B2FFF;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+/* Icona neon grande */
+.how-icon {
+  font-size: 2.8rem;
+  color: #ff00e6;
+  filter: drop-shadow(0 0 8px #ff00e6) drop-shadow(0 0 18px #3c00ff);
+}
+
+.how-icon-green {
+  color: #00ff88;
+  filter: drop-shadow(0 0 8px #00ff88) drop-shadow(0 0 18px #00cc66);
+}
+
+.how-card h3 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  margin: 0;
+  text-shadow: none;
+}
+
+.how-card p {
+  font-family: Arial, sans-serif;
+  font-size: 0.85rem;
+  color: #aaaaaa;
+  line-height: 1.6;
+  margin: 0;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.how-card-link {
+  font-size: 0.8rem;
+  color: #7B2FFF !important;
+  text-decoration: none !important;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-top: auto;
+  transition: color 0.2s;
+}
+
+.how-card-link:hover {
+  color: #9b5fff !important;
+}
+
+/* Card 04 loggato: bordo verde */
+.how-card-auth--in {
+  border-color: #00ff88;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+.how-card-welcome strong {
+  color: #ffffff;
+  font-weight: 700;
+}
+
 @media (max-width: 900px) {
-  .event-flex-row,
-  #mainEventCard,
-  .eventListFlex {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 16px;
-  }
-  #iconContainer {
-    flex-direction: column;
-    gap: 16px;
-    height: auto;
-    align-items: center;
-  }
-  .featured-col, #eventDetailsContainer {
-    width: 100%;
-    min-width: 0;
-  }
   #mainContainer {
     padding-left: 8px;
     padding-right: 8px;
+  }
+  .hero-section {
+    width: calc(100% - 16px);
+    margin: 24px 8px 40px 8px;
+    min-height: 360px;
+  }
+  .how-it-works {
+    width: calc(100% - 16px);
+    margin: 0 8px 48px 8px;
+  }
+  .hero-overlay {
+    width: 65%;
+    padding: 24px 24px;
+  }
+  .hero-overlay h2 {
+    font-size: 1.6rem;
+  }
+  .hero-overlay p {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .how-cards-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .how-card {
+    min-height: 240px;
+  }
+  .how-card-overlay {
+    padding: 20px 16px;
+  }
+  .hero-overlay {
+    width: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.1) 100%);
+  }
+  .hero-overlay p {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 360px) {
+  .how-cards-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .how-card {
+    min-height: 200px;
   }
 }
 
 @media (max-width: 600px) {
   #mainContent {
+    padding-top: 70px;
     padding-left: 8px;
     padding-right: 8px;
   }
@@ -202,68 +328,35 @@ span {
     padding-left: 4px;
     padding-right: 4px;
   }
-}
-
-/* Riduci dimensioni e padding sotto i 600px */
-@media (max-width: 600px) {
-  #mainContent {
-    padding-top: 70px;
-     /* navbar più compatta su mobile */
+  #mainContainer h1 {
+    font-size: 1.6rem;
+    letter-spacing: 0.06em;
   }
-  h1 {
+  .hero-section {
+    width: calc(100% - 16px);
+    margin: 16px 8px 32px 8px;
+    min-height: 280px;
+    border-radius: 14px;
+  }
+  .hero-overlay {
+    padding: 20px 20px;
+  }
+  .hero-overlay h2 {
+    font-size: 1.3rem;
+  }
+  .hero-overlay p {
+    font-size: 0.8rem;
+  }
+  .how-icon {
     font-size: 2rem;
-    letter-spacing: 0.08em;
-    margin-top: 40px;
-  }
-  #titleFeaturedEvent h2 {
-    font-size: 1.3rem;
-  }
-  .event-search-input {
-    width: 95%;
-    font-size: 1rem;
-  }
-  #iconContainer {
-    gap: 12px;
-  }
-  #Logo {
-    width: 140px;
-    height: 140px;
-  }
-  .featured-img {
-    width: 100%;
-    max-width: 350px;
-    height: auto;
-    border-radius: 20px;
-    display: block;
-    margin: 0 auto;
-    object-fit: cover;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
   }
 }
 
-/* Ancora più piccolo sotto i 400px */
 @media (max-width: 400px) {
-  h1 {
-    font-size: 1.3rem;
+  #mainContainer h1 {
+    font-size: 1.2rem;
   }
-  .event-search-input {
-    font-size: 0.9rem;
-    padding: 6px 8px;
-  }
-  #Logo {
-    width: 90px;
-    height: 90px;
-  }
-  .featured-img {
-    width: 100%;
-    max-width: 350px;
-    height: auto;
-    border-radius: 20px;
-    display: block;
-    margin: 0 auto;
-    object-fit: cover;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  .hero-overlay h2 {
+    font-size: 1.1rem;
   }
 }
-
- 

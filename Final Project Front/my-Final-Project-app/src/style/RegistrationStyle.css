@@ -1,11 +1,12 @@
-/* Contenitore centrale */
 .registration-form {
   max-width: 320px;
   margin: 40px auto;
   padding: 20px 14px;
   background: #181818;
   border-radius: 14px;
-  box-shadow: 0 2px 12px rgba(60,0,255,0.12);
+  border: 1px solid #1e1e1e;
+  border-top: 2px solid #ff00e6;
+  box-shadow: 0 2px 20px rgba(255, 0, 230, 0.1);
   color: #fff;
   font-family: 'Orbitron', Arial, sans-serif;
   display: flex;
@@ -13,27 +14,21 @@
   gap: 10px;
 }
 
-/* Titolo */
 .registration-form h2 {
   text-align: center;
   margin-bottom: 16px;
-  color: #fff200;
-  text-shadow:
-    2px 2px 0 #b01919,
-    4px 4px 8px #ff00cc,
-    0 0 24px #3c00ff;
+  color: #ffffff;
+  text-shadow: 0 0 20px rgba(255, 0, 230, 0.5);
   letter-spacing: 0.1em;
   font-size: 1.3rem;
 }
 
-/* Form */
 .registration-form form {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-/* Label e input */
 .registration-form label {
   font-size: 0.98rem;
   margin-bottom: 3px;
@@ -61,9 +56,8 @@
   box-shadow: 0 0 0 2px #ff00e6;
 }
 
-/* Bottone */
 .registration-form button[type="submit"] {
-  background: linear-gradient(90deg, #ff00e6, #3c00ff);
+  background: #ff00e6;
   color: #fff;
   border: none;
   border-radius: 7px;
@@ -72,12 +66,12 @@
   font-weight: bold;
   cursor: pointer;
   margin-top: 6px;
-  transition: background 0.2s;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(255, 0, 230, 0.4);
 }
 
 .registration-form button[type="submit"]:hover {
-  background: linear-gradient(90deg, #fff200, #ff00cc);
-  color: #181818;
+  background: #ff33f0;
 }
 
 .login-link {
@@ -88,14 +82,20 @@
   font-size: 0.9rem;
 }
 
-/* Contenitore centrale orizzontale */
+.login-link:hover {
+  color: #ff33f0;
+}
+
+/* Form orizzontale */
 .registration-form-horizontal {
   max-width: 500px;
   margin: 40px auto;
   padding: 20px 14px;
   background: #181818;
   border-radius: 14px;
-  box-shadow: 0 2px 12px rgba(60,0,255,0.12);
+  border: 1px solid #1e1e1e;
+  border-top: 2px solid #ff00e6;
+  box-shadow: 0 2px 20px rgba(255, 0, 230, 0.1);
   color: #fff;
   font-family: 'Orbitron', Arial, sans-serif;
   display: flex;
@@ -103,25 +103,20 @@
   gap: 16px;
 }
 
-/* Titolo */
 .registration-form-horizontal h2 {
   text-align: center;
   margin-bottom: 10px;
-  color: #fff200;
-  text-shadow:
-    2px 2px 0 #b01919,
-    4px 4px 8px #ff00cc,
-    0 0 24px #3c00ff;
+  color: #ffffff;
+  text-shadow: 0 0 20px rgba(255, 0, 230, 0.5);
   letter-spacing: 0.1em;
   font-size: 1.3rem;
 }
 
-/* Riga orizzontale dei campi */
 .registration-row {
   display: flex;
   gap: 16px;
   justify-content: space-between;
-  flex-wrap: wrap; /* aggiunto per evitare overflow */
+  flex-wrap: wrap;
 }
 
 .registration-row label {
@@ -137,7 +132,7 @@
 .registration-form-horizontal input[type="email"],
 .registration-form-horizontal input[type="password"],
 .registration-form-horizontal input[type="date"] {
-  width: 100%; /* assicura che l'input non esca dal contenitore */
+  width: 100%;
   box-sizing: border-box;
   padding: 7px;
   border-radius: 7px;
@@ -155,7 +150,7 @@
 }
 
 .registration-form-horizontal button[type="submit"] {
-  background: linear-gradient(90deg, #ff00e6, #3c00ff);
+  background: #ff00e6;
   color: #fff;
   border: none;
   border-radius: 7px;
@@ -164,18 +159,30 @@
   font-weight: bold;
   cursor: pointer;
   margin-top: 6px;
-  transition: background 0.2s;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(255, 0, 230, 0.4);
 }
 
 .registration-form-horizontal button[type="submit"]:hover {
-  background: linear-gradient(90deg, #fff200, #ff00cc);
-  color: #181818;
+  background: #ff33f0;
 }
 
-.login-link {
-  text-align: center;
-  margin-top: 10px;
-  color: #ff00e6;
-  text-decoration: none;
-  font-size: 0.9rem;
+.form-error {
+  color: #ff4d4d;
+  font-size: 0.78rem;
+  margin: 2px 0 0 0;
+  font-weight: 500;
+}
+
+@media (max-width: 540px) {
+  .registration-form,
+  .registration-form-horizontal {
+    margin: 16px;
+    max-width: 100%;
+    padding: 20px 16px;
+  }
+  .registration-row {
+    flex-direction: column;
+    gap: 10px;
+  }
 }

@@ -1,22 +1,37 @@
-.favoriteButton {
-  background: linear-gradient(90deg, #ff00e6, #3c00ff);
+.fav-btn {
+  background: none;
   border: none;
-  border-radius: 8px;
-  padding: 3px 10px;      /* padding più piccolo */
-  font-size: 0.92rem;     /* font leggermente più piccolo */
-  font-weight: bold;
   cursor: pointer;
-  margin-top: 10px;
-  transition: background 0.2s;
-  width: auto;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 
-.favoriteButton:hover {
-  background: linear-gradient(90deg, #fff200, #ff00cc);
-  color: #181818;
+.fav-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
-.favoriteButtonText {
-  color: #fff200; /* oppure il colore che preferisci */
+.fav-icon-wrapper {
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.8));
+  transition: color 0.2s, filter 0.2s, transform 0.15s;
+}
+
+.fav-icon-wrapper--active {
+  color: #ff3333;
+  filter: drop-shadow(0 0 6px rgba(255, 51, 51, 0.7));
+}
+
+.fav-btn:hover .fav-icon-wrapper {
+  transform: scale(1.2);
+}
+
+.fav-icon {
+  font-size: 1.6rem;
 }
 

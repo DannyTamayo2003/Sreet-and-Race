@@ -1,0 +1,303 @@
+.account-page {
+  max-width: 720px;
+  margin: 40px auto;
+  padding: 0 20px 60px 20px;
+  color: #ffffff;
+  font-family: 'Orbitron', 'Arial Black', Arial, sans-serif;
+}
+
+/* ========================
+   STATO CARICAMENTO
+   ======================== */
+.account-status {
+  text-align: center;
+  padding: 60px 20px;
+  color: #888;
+  font-size: 0.9rem;
+}
+.account-status.error { color: #ff4d4d; }
+
+/* ========================
+   HEADER PROFILO
+   ======================== */
+.account-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: #141414;
+  border: 1px solid #1e1e1e;
+  border-radius: 16px;
+  padding: 28px 28px;
+  margin-bottom: 24px;
+}
+
+.account-avatar {
+  font-size: 3.5rem;
+  color: #ff00e6;
+  flex-shrink: 0;
+}
+
+.account-name {
+  font-size: 1.4rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+  text-shadow: none;
+}
+
+.account-email {
+  font-family: Arial, sans-serif;
+  font-size: 0.85rem;
+  color: #aaaaaa;
+  letter-spacing: 0;
+  margin: 0;
+}
+
+/* ========================
+   INFO CARD
+   ======================== */
+.account-info-card {
+  background: #141414;
+  border: 1px solid #1e1e1e;
+  border-radius: 16px;
+  padding: 24px 28px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.account-info-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.account-info-row ion-icon {
+  font-size: 1.2rem;
+  color: #ff00e6;
+  min-width: 20px;
+}
+
+.account-info-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #555;
+  margin-bottom: 2px;
+}
+
+.account-info-value {
+  font-size: 0.88rem;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  letter-spacing: 0;
+}
+
+/* ========================
+   SEZIONE TITOLO
+   ======================== */
+.account-section-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ff00e6;
+  margin: 0 0 16px 0;
+  text-shadow: none;
+}
+
+/* ========================
+   LISTA EVENTI
+   ======================== */
+.account-events-section {
+  background: #141414;
+  border: 1px solid #1e1e1e;
+  border-radius: 16px;
+  padding: 24px 28px;
+  margin-bottom: 24px;
+}
+
+.account-events-empty {
+  font-family: Arial, sans-serif;
+  font-size: 0.85rem;
+  color: #555;
+  margin: 0;
+  letter-spacing: 0;
+}
+
+.account-event-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.account-event-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #0d0d0d;
+  border: 1px solid #1e1e1e;
+  border-radius: 10px;
+  padding: 12px 14px;
+  transition: border-color 0.2s;
+}
+
+.account-event-item:hover {
+  border-color: #ff00e6;
+}
+
+.account-event-thumb {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.account-event-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.account-event-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-shadow: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.account-event-meta {
+  font-family: Arial, sans-serif;
+  font-size: 0.78rem;
+  color: #888;
+  letter-spacing: 0;
+}
+
+.account-event-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.account-btn-edit,
+.account-btn-delete {
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-family: 'Orbitron', Arial, sans-serif;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.account-btn-edit {
+  background: #ff00e6;
+  color: #ffffff;
+}
+.account-btn-edit:hover {
+  background: #ff44ee;
+  box-shadow: 0 2px 12px rgba(255, 0, 230, 0.4);
+}
+
+.account-btn-delete {
+  background: transparent;
+  color: #ff4d4d;
+  border: 1px solid #ff4d4d;
+}
+.account-btn-delete:hover {
+  background: #ff4d4d;
+  color: #ffffff;
+}
+
+/* ========================
+   LOGOUT
+   ======================== */
+.account-logout-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.account-logout-btn {
+  background: transparent;
+  color: #ff4d4d;
+  border: 1px solid #ff4d4d;
+  border-radius: 8px;
+  padding: 10px 28px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-family: 'Orbitron', Arial, sans-serif;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.account-logout-btn:hover {
+  background: #ff4d4d;
+  color: #ffffff;
+}
+
+/* ========================
+   RESPONSIVE
+   ======================== */
+@media (max-width: 600px) {
+  .account-page { padding: 0 12px 40px 12px; margin-top: 24px; }
+  .account-header { flex-direction: column; text-align: center; padding: 20px; }
+
+  /* Piccola griglia adattiva: si aggiusta al numero di eventi e alla larghezza schermo */
+  .account-event-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px;
+  }
+
+  .account-event-item {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .account-event-thumb {
+    width: 100%;
+    height: 90px;
+  }
+
+  .account-event-info {
+    text-align: center;
+  }
+
+  .account-event-name {
+    white-space: normal;
+    font-size: 0.78rem;
+  }
+
+  .account-event-meta {
+    font-size: 0.68rem;
+  }
+
+  .account-event-actions {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .account-btn-edit,
+  .account-btn-delete {
+    flex: 1;
+    padding: 6px 8px;
+    font-size: 0.68rem;
+  }
+}

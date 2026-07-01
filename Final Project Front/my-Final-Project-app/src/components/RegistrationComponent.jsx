@@ -1,64 +1,73 @@
+/*
+ * RegistrationComponent.jsx — Form di registrazione
+ * Raccoglie i dati del nuovo utente e li invia al backend tramite POST.
+ * La data di nascita viene convertita in formato ISO 8601 prima dell'invio.
+ */
+
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import '../style/RegistrationStyle.css'
 
-
 export default function RegistrationComponent() {
+  const navigate = useNavigate()
   const [form, setForm] = useState({
     nameUser: '',
     dateOfBirth: '',
     emailUser: '',
     pwdUser: ''
   })
+  const [formErrors, setFormErrors] = useState({})
 
-  const handleChange = e => {
+  function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value })
+    if (formErrors[e.target.name]) {
+      setFormErrors({ ...formErrors, [e.target.name]: '' })
+    }
   }
 
-  const handleSubmit = async e => {
+  async function handleSubmit(e) {
     e.preventDefault()
-    // Preparazione dei dati per l'invio al backend
-    const dataToSend = { ...form };
 
-    // Gestione specifica per dateOfBirth:
-    // Converti la stringa 'YYYY-MM-DD' in un oggetto con '$date' e formato ISO 8601
+    const dataToSend = { ...form }
+
+    // L'input HTML di tipo "date" restituisce una stringa 'YYYY-MM-DD'.
+    // MongoDB si aspetta il formato ISO 8601 (es. "1990-05-20T00:00:00.000Z").
     if (form.dateOfBirth) {
-      // Crea un oggetto Date dalla stringa YYYY-MM-DD
-      const dateObject = new Date(form.dateOfBirth);
-      // Assicurati che sia una data valida
+      const dateObject = new Date(form.dateOfBirth)
       if (!isNaN(dateObject.getTime())) {
-        dataToSend.dateOfBirth = dateObject.toISOString();
+        dataToSend.dateOfBirth = dateObject.toISOString()
       } else {
-        // Gestisci il caso in cui la data non è valida, se necessario
-        console.error("Data di nascita non valida:", form.dateOfBirth);
-        alert("Per favore, inserisci una data di nascita valida.");
-        return; // Blocca l'invio del form
+        alert('Per favore, inserisci una data di nascita valida.')
+        return
       }
     }
 
     try {
-      const res = await fetch('http://localhost:3000/api/user/register', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/user/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dataToSend)
       })
       const data = await res.json()
+
       if (res.ok) {
-        alert('Registrazione completata!')
-        // Puoi reindirizzare al login qui, ad esempio:
-        // navigate('/login');
+        navigate('/login')
+      } else if (data.errors) {
+        const erroriPerCampo = {}
+        data.errors.forEach(function(err) {
+          erroriPerCampo[err.path] = err.msg
+        })
+        setFormErrors(erroriPerCampo)
       } else {
-        // Se il backend restituisce un messaggio di errore specifico
-        alert(data.message || data.error || 'Registrazione fallita');
+        alert(data.message || 'Registrazione fallita. Riprova.')
       }
     } catch (err) {
-      console.error('Errore di rete o nella richiesta:', err);
-      alert('Errore di rete. Controlla la tua connessione o riprova più tardi.');
+      alert('Errore di rete. Controlla la connessione e riprova.')
     }
   }
 
   return (
     <form className="registration-form-horizontal" onSubmit={handleSubmit}>
-      <h2>Registration</h2>
       <div className="registration-row">
         <label>
           Nome:
@@ -67,8 +76,8 @@ export default function RegistrationComponent() {
             name="nameUser"
             value={form.nameUser}
             onChange={handleChange}
-            required
           />
+          {formErrors.nameUser && <p className="form-error">{formErrors.nameUser}</p>}
         </label>
         <label>
           Data di nascita:
@@ -77,8 +86,8 @@ export default function RegistrationComponent() {
             name="dateOfBirth"
             value={form.dateOfBirth}
             onChange={handleChange}
-            required
           />
+          {formErrors.dateOfBirth && <p className="form-error">{formErrors.dateOfBirth}</p>}
         </label>
       </div>
       <div className="registration-row">
@@ -89,8 +98,8 @@ export default function RegistrationComponent() {
             name="emailUser"
             value={form.emailUser}
             onChange={handleChange}
-            required
           />
+          {formErrors.emailUser && <p className="form-error">{formErrors.emailUser}</p>}
         </label>
         <label>
           Password:
@@ -99,8 +108,8 @@ export default function RegistrationComponent() {
             name="pwdUser"
             value={form.pwdUser}
             onChange={handleChange}
-            required
           />
+          {formErrors.pwdUser && <p className="form-error">{formErrors.pwdUser}</p>}
         </label>
       </div>
       <button type="submit">Registrati</button>

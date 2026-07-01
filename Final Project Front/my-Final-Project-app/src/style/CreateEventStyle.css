@@ -2,168 +2,183 @@
   max-width: 800px;
   width: 98vw;
   margin: 24px auto;
-  background: rgba(24,24,24,0.92);
+  background: #141414;
+  border: 1px solid #1e1e1e;
+  border-top: 2px solid #ff00e6;
   border-radius: 18px;
-  box-shadow: 0 4px 24px rgba(60,0,255,0.10);
-  padding: 20px 16px 16px 16px;
-  font-family: 'Orbitron', 'Arial Black', Arial, sans-serif;
-  color: #fff;
+  box-shadow: 0 4px 24px rgba(123, 47, 255, 0.1), 0 -2px 18px rgba(255, 0, 230, 0.15);
+  padding: 32px 28px;
+  font-family: 'Orbitron', Arial, sans-serif;
+  color: #ffffff;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-
+  gap: 16px;
 }
 
 .create-event-form h2 {
-  color: #fff200;
-  font-size: 1.7rem;
-  margin-bottom: 18px;
-  letter-spacing: 0.04em;
+  color: #ff00e6;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-align: center;
   text-transform: uppercase;
-  text-shadow:
-    2px 2px 0 #b01919,
-    4px 4px 8px #ff00cc,
-    0 0 24px #3c00ff;
+  margin-bottom: 8px;
+  text-shadow: 0 0 10px #ff00e6, 0 0 22px #3c00ff;
 }
 
+/* Label dei campi */
 .create-event-form label {
   display: flex;
   flex-direction: column;
-  font-size: 1.08rem;
-  color: #fff200;
+  gap: 6px;
+  font-size: 0.78rem;
   font-weight: 600;
-  margin-bottom: 2px;
-  letter-spacing: 0.01em;
-  align-items: flex-start;
+  color: #aaaaaa;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
+/* Input, textarea, select */
 .create-event-form input,
-.create-event-form textarea {
-  margin-bottom: 4px;
-  padding: 5px 7px;
+.create-event-form textarea,
+.create-event-form select {
+  padding: 10px 14px;
   border-radius: 8px;
-  border: none;
-  background: #232323;
-  color: #fff;
-  font-size: 0.92rem;    /* riduci la dimensione del testo */
+  border: 1px solid #1e1e1e;
+  background: #0d0d0d;
+  color: #ffffff;
+  font-size: 0.9rem;
   font-family: inherit;
-  box-shadow: 0 2px 8px rgba(60,0,255,0.05);
   outline: none;
-  transition: box-shadow 0.2s;
-}
-
-/* Input normali più stretti */
-.create-event-form input[type="text"],
-.create-event-form input[type="date"] {
-  width: 220px;
-  max-width: 100%;
-  min-width: 180px;
-}
-
-/* Descrizione dettagliata e textarea più larghe */
-.create-event-form textarea {
-  width: 100%;
-  min-width: 320px;
-  min-height: 50px;
-  resize: vertical;
-}
-
-/* Rendi la textarea descrizione dettagliata più alta */
-.create-event-form textarea[name="descrizioneDettagliata"] {
-  min-height: 90px;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .create-event-form input:focus,
-.create-event-form textarea:focus {
-  box-shadow: 0 0 0 2px #3c00ff;
+.create-event-form textarea:focus,
+.create-event-form select:focus {
+  border-color: #7B2FFF;
+  box-shadow: 0 0 0 2px rgba(123, 47, 255, 0.25);
 }
 
-.create-event-form textarea {
-  min-height: 70px;
-  resize: vertical;
+.create-event-form input:disabled,
+.create-event-form select:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
-.create-event-form button[type="submit"] {
-  background: linear-gradient(90deg, #3c00ff 0%, #ff00e6 100%);
-  color: #fff200;
-  font-family: inherit;
-  font-size: 1.1rem;
-  font-weight: 700;
-  border: none;
-  border-radius: 10px;
-  padding: 12px 0;
-  margin-top: 10px;
+/* Select — rimuove lo stile default del browser */
+.create-event-form select {
+  appearance: none;
   cursor: pointer;
-  letter-spacing: 0.04em;
-  box-shadow: 0 2px 12px rgba(60,0,255,0.10);
-  transition: background 0.2s, color 0.2s;
 }
 
-.create-event-form button[type="submit"]:hover {
-  background: linear-gradient(90deg, #ff00e6 0%, #3c00ff 100%);
-  color: #fff;
-}
-
-/* Nuove classi per il layout a griglia e input centrati */
+/* Nome evento — centrato e più largo */
 .centered-label {
   align-items: center;
   text-align: center;
 }
 
-.centered-label label,
-.centered-label span,
-.centered-label strong {
-  display: block;
-  text-align: center;
-  width: 100%;
-  margin-bottom: 6px;
-}
-
 .wide-input {
-  width: 60%;
-  min-width: 180px;
-  max-width: 350px;
+  width: 70%;
+  max-width: 420px;
   margin: 0 auto;
-  display: block;
 }
 
+/* Textarea */
+.create-event-form textarea {
+  resize: vertical;
+  min-height: 110px;
+  line-height: 1.6;
+}
+
+/* Grid 2 colonne per i campi secondari */
 .event-form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px 18px;
-  margin: 10px 0;
+  gap: 16px;
 }
 
-.event-form-grid label {
-  display: flex;
-  flex-direction: column;
-  font-size: 1.08rem;
-  color: #fff200;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  align-items: flex-start;
-}
-
-.event-form-grid input {
-  width: 100%;
-  min-width: 0;
-  margin-top: 6px;
-  padding: 10px 12px;
-  border-radius: 8px;
-  border: none;
-  background: #232323;
-  color: #fff;
-  font-size: 1rem;
+/* Bottone submit */
+.create-event-form button[type="submit"] {
+  background: #ff00e6;
+  color: #ffffff;
   font-family: inherit;
-  box-shadow: 0 2px 8px rgba(60,0,255,0.05);
-  outline: none;
-  transition: box-shadow 0.2s;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 0;
+  margin-top: 8px;
+  cursor: pointer;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(255, 0, 230, 0.35);
+  transition: background 0.2s, box-shadow 0.2s;
 }
 
-/* Responsive per mobile */
-@media (max-width: 900px) {
+.create-event-form button[type="submit"]:hover {
+  background: #ff33f0;
+  box-shadow: 0 4px 28px rgba(255, 0, 230, 0.6);
+}
+
+/* Bottone annulla (EditEvent) */
+.create-event-form button[type="button"] {
+  background: #1e1e1e;
+  color: #aaaaaa;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border: 1px solid #1e1e1e;
+  border-radius: 10px;
+  padding: 14px 24px;
+  margin-top: 8px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.create-event-form button[type="button"]:hover {
+  background: #2a2a2a;
+  color: #ffffff;
+}
+
+/* Contatore caratteri */
+.char-count {
+  font-size: 0.72rem;
+  color: #ff00e6;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Messaggio di errore */
+.form-error {
+  color: #ff4d4d;
+  font-size: 0.75rem;
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .event-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .wide-input {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
   .create-event-form {
-    padding: 10px 2vw 10px 2vw;
+    padding: 20px 16px;
+    border-radius: 12px;
+  }
+  .create-event-form h2 {
+    font-size: 1.2rem;
   }
 }

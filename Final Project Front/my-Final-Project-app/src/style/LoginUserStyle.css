@@ -1,49 +1,52 @@
-/* Contenitore centrale */
 .login-container {
-  max-width: 350px;
-  margin: 60px auto;
-  padding: 32px 24px;
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px 14px;
   background: #181818;
-  border-radius: 16px;
-  box-shadow: 0 4px 24px rgba(60,0,255,0.15);
+  border-radius: 14px;
+  border: 1px solid #1e1e1e;
+  border-top: 2px solid #ff00e6;
+  box-shadow: 0 2px 20px rgba(255, 0, 230, 0.1);
   color: #fff;
   font-family: 'Orbitron', Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-/* Titolo */
 .login-container h2 {
   text-align: center;
-  margin-bottom: 24px;
-  color: #fff200;
-  text-shadow:
-    2px 2px 0 #b01919,
-    4px 4px 8px #ff00cc,
-    0 0 24px #3c00ff;
+  margin-bottom: 10px;
+  color: #ffffff;
+  text-shadow: 0 0 20px rgba(255, 0, 230, 0.5);
   letter-spacing: 0.1em;
+  font-size: 1.3rem;
 }
 
-/* Form */
 .login-container form {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 10px;
 }
 
-/* Label e input */
 .login-container label {
-  font-size: 1rem;
-  margin-bottom: 6px;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.98rem;
+  margin-bottom: 0;
 }
 
 .login-container input[type="email"],
 .login-container input[type="password"] {
-  padding: 10px;
-  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 7px;
+  border-radius: 7px;
   border: none;
   background: #232323;
   color: #fff;
-  font-size: 1rem;
-  margin-top: 4px;
+  font-size: 0.98rem;
+  margin-top: 2px;
   outline: none;
   transition: box-shadow 0.2s;
 }
@@ -53,29 +56,40 @@
   box-shadow: 0 0 0 2px #ff00e6;
 }
 
-/* Bottone */
 .login-container button[type="submit"] {
-  background: linear-gradient(90deg, #ff00e6, #3c00ff);
+  background: #ff00e6;
   color: #fff;
   border: none;
-  border-radius: 8px;
-  padding: 12px;
+  border-radius: 7px;
+  padding: 9px;
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
-  margin-top: 10px;
-  transition: background 0.2s;
+  margin-top: 6px;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(255, 0, 230, 0.4);
 }
 
 .login-container button[type="submit"]:hover {
-  background: linear-gradient(90deg, #fff200, #ff00cc);
-  color: #181818;
+  background: #ff33f0;
+  box-shadow: 0 4px 28px rgba(255, 0, 230, 0.6);
 }
 
 .RegistrationLink {
   text-align: center;
-  margin-top: 16px;
+  margin-top: 10px;
   color: #ff00e6;
   text-decoration: none;
   font-size: 0.9rem;
+}
+
+.RegistrationLink:hover {
+  color: #ff33f0;
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    margin: 16px;
+    padding: 20px 16px;
+  }
 }

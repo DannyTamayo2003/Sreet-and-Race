@@ -1,59 +1,43 @@
-/* filepath: src/style/FavoriteEventPageStyle.css */
 .favorite-events-container {
   padding: 32px;
-
   min-height: 100vh;
 }
 
-.favorite-title {
-  color: #fff200;
+.favorite-loading,
+.favorite-error {
+  font-family: Arial, sans-serif;
   text-align: center;
-  margin-bottom: 32px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  color: #888888;
+  padding: 40px 0;
 }
+
+.favorite-error { color: #ff4d4d; }
 
 .favorite-empty {
-  color: #fff;
+  color: #888888;
   text-align: center;
-  font-size: 1.2rem;
-}
-
-.favorite-cards-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-  justify-content: center;
-}
-
-.remove-favorite-btn {
-  margin: 12px auto 24px auto;
-  display: block;
-  background: #b01919;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 18px;
   font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.remove-favorite-btn:hover {
-  background: #ff9800;
-  color: #222;
+  font-family: Arial, sans-serif;
+  padding: 40px 0;
 }
 
-.remove-favorite-icon {
-  background: none;
-  border: none;
-  color: #b01919;
-  font-size: 1.7rem;
-  cursor: pointer;
-  margin: 8px auto 16px auto;
-  display: block;
-  transition: color 0.2s;
-}
-.remove-favorite-icon:hover {
-  color: #ff9800;
+.favorite-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 240px));
+  justify-content: center;
+  gap: 18px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
+@media (max-width: 600px) {
+  .favorite-events-container {
+    padding: 16px;
+  }
+
+  .favorite-grid {
+    grid-template-columns: 1fr;
+    justify-content: stretch;
+    gap: 10px;
+  }
+}

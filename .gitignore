@@ -29,3 +29,14 @@ pnpm-debug.log*
 **/*.njsproj
 **/*.sln
 **/*.sw?
+
+# File di lavoro Claude (non necessari su GitHub)
+CLAUDE.md
+.claude/
+
+# Appunti personali di lavoro (frontend)
+Final Project Front/my-Final-Project-app/funzionalita.txt
+Final Project Front/my-Final-Project-app/style.txt
+
+# Upload locali (le immagini in produzione sono gestite da Cloudinary)
+Final Project Back/uploads/

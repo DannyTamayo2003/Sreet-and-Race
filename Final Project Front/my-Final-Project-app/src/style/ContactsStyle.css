@@ -1,59 +1,213 @@
-.contactsSection {
-  text-align: center;
-  margin: 32px auto;
-}
-
-.contactsSection h2 {
+/* ========================
+   PAGE
+   ======================== */
+.ct-page {
+  width: 100%;
+  min-height: 100vh;
   color: #ffffff;
-  margin-bottom: 18px;
   font-family: 'Orbitron', 'Arial Black', Arial, sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
 }
 
-.contactsSection ul {
-  list-style: none;
-  padding: 0;
+/* ========================
+   HERO
+   ======================== */
+.ct-hero {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  background: linear-gradient(135deg, #0d0d0d 0%, #1a0a2e 50%, #0d0d0d 100%);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.ct-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 60% 50%, rgba(255,0,230,0.12) 0%, transparent 65%);
+}
+
+.ct-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(13,13,13,0.9) 0%, transparent 70%);
+}
+
+.ct-hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 32px 48px;
+}
+
+.ct-hero-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #ff00e6;
+  margin-bottom: 8px;
+  font-family: Arial, sans-serif;
+}
+
+.ct-hero-title {
+  font-size: 2.8rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #ffffff;
+  margin: 0 0 10px 0;
+  line-height: 1;
+}
+
+.ct-hero-sub {
+  font-size: 0.82rem;
+  color: #888888;
+  font-family: Arial, sans-serif;
+  letter-spacing: 0;
+  margin: 0;
+  max-width: 480px;
+}
+
+/* ========================
+   BODY
+   ======================== */
+.ct-body {
+  max-width: 680px;
+  margin: 48px auto;
+  padding: 0 24px 60px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ========================
+   CARD INSTAGRAM
+   ======================== */
+.ct-ig-card {
+  background: #141414;
+  border: 1px solid #1e1e1e;
+  border-radius: 16px;
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+
+.ct-ig-icon-wrap {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 24px rgba(255,0,230,0.3);
+}
+
+.ct-ig-icon {
+  font-size: 2rem;
+  color: #ffffff;
+}
+
+.ct-ig-handle {
+  font-size: 1.4rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+}
+
+.ct-ig-desc {
+  font-size: 0.84rem;
+  color: #888888;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  letter-spacing: 0;
   margin: 0;
 }
 
-.contactsSection li {
-  margin: 10px 0;
+.ct-ig-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 14px 28px;
+  background: #ff00e6;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.ct-ig-btn:hover {
+  background: #ff44ee;
+  box-shadow: 0 0 16px rgba(255,0,230,0.4);
+}
+
+.ct-ig-btn ion-icon {
   font-size: 1.1rem;
 }
 
-.contactsSection a {
-  color: #fff200;
-  text-decoration: none;
-  font-weight: 600;
+/* ========================
+   CARD CHI SIAMO
+   ======================== */
+.ct-about-card {
+  background: #141414;
+  border: 1px solid #1e1e1e;
+  border-radius: 16px;
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
-.contactsSection a:hover {
-  text-decoration: underline;
+.ct-about-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #ff00e6;
 }
 
-.contact-icon {
-  font-size: 1.5em;
-  color: #3c00ff;
-  vertical-align: middle;
-}
-.contact-icon.custom-gmail {
-  width: 1.5em;
-  height: 1.5em;
-  object-fit: contain;
-  margin-right: 6px;
-  border-radius: 50%;
-  aspect-ratio: 1/1;
-  background: #fff; /* opzionale */
+.ct-about-text {
+  font-size: 0.88rem;
+  color: #aaaaaa;
+  font-family: Arial, sans-serif;
+  line-height: 1.7;
+  letter-spacing: 0;
+  margin: 0;
 }
 
-.contact-icon.custom-whatsapp,
-.contact-icon.custom-instagram {
-  width: 1.5em;
-  height: 1.5em;
-  object-fit: contain;
-  margin-right: 6px;
-  border-radius: 50%;
-  aspect-ratio: 1/1;
-  background: #fff; /* opzionale */
+.ct-about-meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ct-about-badge {
+  font-size: 0.7rem;
+  font-family: Arial, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #555555;
+  border: 1px solid #2a2a2a;
+  border-radius: 20px;
+  padding: 4px 12px;
+}
+
+/* ========================
+   RESPONSIVE
+   ======================== */
+@media (max-width: 600px) {
+  .ct-hero { height: 220px; }
+  .ct-hero-content { padding: 24px 20px; }
+  .ct-hero-title { font-size: 2rem; }
+  .ct-body { margin-top: 32px; }
+  .ct-ig-card { padding: 28px 20px; }
+  .ct-about-card { padding: 22px 20px; }
 }

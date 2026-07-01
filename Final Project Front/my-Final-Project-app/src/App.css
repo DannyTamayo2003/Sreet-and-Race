@@ -4,8 +4,43 @@ html, body {
 
 body {
   font-family: 'Orbitron', 'Arial Black', Arial, sans-serif;
-  background-color: #1d1d1d;
-color: rgb(255, 255, 255);
+  background-color: #0d0d0d;
+  background-image:
+    radial-gradient(ellipse at 15% 20%, rgba(255,0,230,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 75%, rgba(60,0,255,0.07) 0%, transparent 50%);
+  background-attachment: fixed;
+  color: #ffffff;
+}
+
+/* Layout con sidebar */
+#appLayout {
+  display: flex;
+  min-height: 100vh;
+}
+
+#mainContent {
+  margin-left: 220px;
+  flex: 1;
+  min-height: 100vh;
+  padding-top: 40px;
+}
+
+@media (max-width: 991px) {
+  #mainContent {
+    margin-left: 0;
+    padding-top: 80px;
+  }
+}
+
+/* spazio extra per il banner fisso */
+#mainContent.has-banner {
+  padding-top: 155px;
+}
+
+@media (max-width: 991px) {
+  #mainContent.has-banner {
+    padding-top: 185px;
+  }
 }
 
 #mainContent.blurred {

@@ -1,0 +1,213 @@
+.ec-card {
+  width: 100%;
+  border: 1px solid #1e1e1e;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #141414;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.ec-card:hover {
+  border-color: #ff00e6;
+  transform: translateY(-4px);
+  box-shadow: 0 0 24px rgba(255, 0, 230, 0.2);
+}
+
+/* Locandina verticale — formato poster */
+.ec-image-wrapper {
+  width: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.ec-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.ec-card:hover .ec-image {
+  transform: scale(1.03);
+}
+
+/* Badge data in alto a sinistra sopra la locandina */
+.ec-date-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #ff00e6;
+  border-radius: 7px;
+  padding: 5px 9px;
+  text-align: center;
+  min-width: 40px;
+  box-shadow: 0 2px 10px rgba(255, 0, 230, 0.5);
+  z-index: 2;
+}
+
+.ec-date-day {
+  font-size: 1rem;
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1;
+  display: block;
+}
+
+.ec-date-month {
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: #dddddd;
+  letter-spacing: 0.05em;
+  display: block;
+}
+
+/* Cuore in alto a destra */
+.ec-favorite {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+}
+
+/* Info sotto la locandina */
+.ec-body {
+  padding: 12px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ec-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  font-family: 'Orbitron', Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ec-location {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.74rem;
+  color: #888888;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ec-location ion-icon {
+  color: #ff00e6;
+  font-size: 0.85rem;
+  filter: drop-shadow(0 0 4px #ff00e6);
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .ec-title {
+    font-size: 0.7rem;
+  }
+
+  .ec-location {
+    font-size: 0.65rem;
+  }
+
+  .ec-body {
+    padding: 8px 10px 10px;
+    gap: 4px;
+  }
+}
+
+/* Variante orizzontale — usata nei Preferiti.
+   Su mobile resta una riga compatta, su desktop torna al formato
+   poster verticale (come le card normali) per sfruttare più spazio. */
+.ec-card--horizontal {
+  flex-direction: row;
+  min-height: 84px;
+}
+
+.ec-card--horizontal .ec-image-wrapper {
+  width: 84px;
+  aspect-ratio: auto;
+  height: auto;
+  flex-shrink: 0;
+}
+
+.ec-card--horizontal .ec-body {
+  flex: 1;
+  justify-content: center;
+  padding: 8px 12px;
+  gap: 4px;
+}
+
+.ec-card--horizontal .ec-date-badge {
+  top: 6px;
+  left: 6px;
+  padding: 3px 6px;
+  min-width: 28px;
+}
+
+.ec-card--horizontal .ec-date-day {
+  font-size: 0.8rem;
+}
+
+.ec-card--horizontal .ec-date-month {
+  font-size: 0.45rem;
+}
+
+.ec-card--horizontal .ec-favorite {
+  top: 6px;
+  right: 6px;
+}
+
+@media (min-width: 601px) {
+  .ec-card--horizontal {
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .ec-card--horizontal .ec-image-wrapper {
+    width: 100%;
+    aspect-ratio: 3/4;
+    height: auto;
+  }
+
+  .ec-card--horizontal .ec-body {
+    flex: none;
+    justify-content: flex-start;
+    padding: 12px 14px 14px;
+  }
+
+  .ec-card--horizontal .ec-date-badge {
+    top: 10px;
+    left: 10px;
+    padding: 5px 9px;
+    min-width: 40px;
+  }
+
+  .ec-card--horizontal .ec-date-day {
+    font-size: 1rem;
+  }
+
+  .ec-card--horizontal .ec-date-month {
+    font-size: 0.55rem;
+  }
+
+  .ec-card--horizontal .ec-favorite {
+    top: 10px;
+    right: 10px;
+  }
+}

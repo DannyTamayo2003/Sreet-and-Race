@@ -1,103 +1,115 @@
-import React, { useEffect, useState } from 'react'
-import '../style/HomePageStyle.css'
+/*
+ * HomePage.jsx — Landing Page
+ * Pagina principale dell'app, pensata come vetrina del brand "Street & Race".
+ * Non mostra eventi: per la lista completa degli eventi vai su /eventpage.
+ */
 
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import '../style/HomePageStyle.css'
+import heroBg from '../assets/hero-bg.png'
+import gearImg from '../assets/gear-bg.png'
+import mapImg from '../assets/map-italy-bg.png'
+import heartImg from '../assets/heart-bg.png'
+import communityImg from '../assets/community-bg.png'
 
-import FeaturedCardComponent from '../components/FeaturedCardComponent'
-import EventCardComponent from '../components/EventCardComponent'
-import MockEventsComponent from '../components/MockEventsComponent'
-
-//import mockEvents data
-import mockEvents from '../mocks/MockEvents'
-
-// Dati manuali per l'evento in evidenza (puoi anche prenderlo dal backend se vuoi)
-const featuredEvent = {
-    id: 1,
-    nome: "Music Festival",
-    data: "2023-10-15",
-    location: "Central Park, NY",
-    descrizione: "Join us for a day of music and fun!"
-}
-
-
+const HOW_IT_WORKS = [
+    {
+        number: '01',
+        icon: 'search-outline',
+        title: 'Esplora',
+        description: 'Pensata per trovare eventi in tutta Italia: cerca quello più vicino a te.',
+        bg: mapImg,
+    },
+    {
+        number: '02',
+        icon: 'heart-outline',
+        title: 'Salva',
+        description: 'Aggiungi i tuoi eventi preferiti con un click, prima che scadano o non siano più disponibili.',
+        bg: heartImg,
+    },
+    {
+        number: '03',
+        icon: 'add-circle-outline',
+        title: 'Crea',
+        description: 'Organizza il tuo evento e condividilo con la community.',
+        bg: gearImg,
+    },
+]
 
 export default function HomePage() {
-    const [homeEvents, setHomeEvents] = useState([])
-    // Stato per login (esempio: true se c'è userId in localStorage)
-    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("userId"))
-    // Stato per i preferiti dell'utente loggato
-    const [favorites, setFavorites] = useState([])
+    const [nameUser, setNameUser] = useState(null)
 
-    // Funzione per aggiungere/rimuovere preferiti
-    const toggleFavorite = (eventId) => {
-        if (!isLoggedIn) return;
-        setFavorites(prev =>
-            prev.includes(eventId)
-                ? prev.filter(id => id !== eventId)
-                : [...prev, eventId]
-        );
-    }
-
-    useEffect(() => {
-        fetch('http://localhost:3000/api/eventi')
-            .then(res => res.json())
-            .then(data => setHomeEvents(data))
-            .catch(err => console.error('Errore nel caricamento eventi:', err))
+    useEffect(function() {
+        const token = localStorage.getItem('token')
+        const name = localStorage.getItem('nameUser')
+        if (token) setNameUser(name || '')
     }, [])
 
-    // Render della pagina principale con evento in evidenza, lista eventi e icone
+    const isLoggedIn = nameUser !== null
+
     return (
-        <>
-            <div id='mainContainer'>
-                <h1>STREET AND RACE</h1>
+        <div id='mainContainer'>
 
-
-                <div id='mainEventCard' className="event-flex-row">
-
-
-                    <div className="featured-col">
-                        <div id="titleFeaturedEvent">
-                            <h2>in evidenzia</h2>
-                        </div>
-                        <FeaturedCardComponent />
-                    </div>
-                    <div id='eventDetailsContainer'>
-                        <div id='eventDetails'>
-                            <h2>Event Details</h2>
-                            <p><span>Event Name:</span> {featuredEvent.nome}</p>
-                            <p><span>Date:</span> {featuredEvent.data}</p>
-                            <p><span>Location:</span> {featuredEvent.location}</p>
-                            <p><span>Description:</span> {featuredEvent.descrizione}</p>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Sezione lista eventi */}
-                <div>
-                    <h2>I nostri eventi</h2>
-                    <MockEventsComponent events={mockEvents.slice(0, 3)} />
-                </div>
-
-                {/* Sezione icone */}
-                <div id='iconContainer'>
-                    <div className='containerIconText'>
-                        <Link to="/eventpage" className="icon-link">
-                            <ion-icon name="calendar-outline" class="icon"></ion-icon>
-                        </Link>
-                        <h6><span>1.</span> Location</h6>
-                    </div>
-                    <div className='containerIconText'>
-                        <ion-icon name="share-social-sharp" class="icon"></ion-icon>
-                        <h6><span>2.</span> Share</h6>
-                    </div>
-                    {/* 
-                    <div className='containerIconText'>
-                        <ion-icon name="map-outline" class="icon"></ion-icon>
-                        <h6><span>2.</span> Location</h6>
-                    </div> 
-                    */}
+            {/* Hero section */}
+            <div className="hero-section">
+                <img
+                    className="hero-bg"
+                    src={heroBg}
+                    alt="hero"
+                />
+                <div className="hero-overlay">
+                    <h2>VIVI LA PASSIONE.<br /><em>OGNI STRADA, OGNI EVENTO.</em></h2>
+                    <p>Dalla pista alla strada, connettiti con gli appassionati della tua zona. Organizza, crea e scopri eventi. Sei tu a dar vita a questa passione.</p>
+                    <Link to="/eventpage" className="hero-cta">Scopri gli eventi</Link>
                 </div>
             </div>
-        </>
+
+            {/* Come funziona */}
+            <div className="how-it-works">
+                <h2 className="how-title">Come funziona</h2>
+                <div className="how-cards-row">
+                    {HOW_IT_WORKS.map(function(item) {
+                        return (
+                            <div className="how-card" key={item.number}>
+                                {item.bg && (
+                                    <div className="how-card-bg" style={{ backgroundImage: `url(${item.bg})` }} />
+                                )}
+                                <div className="how-card-overlay">
+                                    <ion-icon name={item.icon} class="how-icon"></ion-icon>
+                                    <h3>{item.title}</h3>
+                                    <p>{item.description}</p>
+                                </div>
+                            </div>
+                        )
+                    })}
+
+                    {/* Card 04 — Registrazione / Benvenuto */}
+                    <div className={`how-card how-card-auth${isLoggedIn ? ' how-card-auth--in' : ''}`}>
+                        <div className="how-card-bg" style={{ backgroundImage: `url(${communityImg})` }} />
+                        <div className="how-card-overlay">
+                            <ion-icon
+                                name={isLoggedIn ? 'checkmark-circle-outline' : 'person-add-outline'}
+                                class={`how-icon${isLoggedIn ? ' how-icon-green' : ''}`}
+                            ></ion-icon>
+                            {isLoggedIn ? (
+                                <>
+                                    <h3>Bentornato!</h3>
+                                    {nameUser && <p className="how-card-welcome">Ciao, <strong>{nameUser}</strong> 👋<br />Sei già parte della community.</p>}
+                                    {!nameUser && <p>Sei già parte della community.</p>}
+                                </>
+                            ) : (
+                                <>
+                                    <h3>Unisciti</h3>
+                                    <p>Crea un account gratuito per salvare eventi e organizzare i tuoi raduni.</p>
+                                </>
+                            )}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
     )
 }

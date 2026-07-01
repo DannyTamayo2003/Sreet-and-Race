@@ -1,65 +1,128 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import '../style/NavBarStyle.css'
-import { Navbar, Nav, Container } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
-import logo from '../assets/ProvaLogo.png'
-import userImg from '../assets/userimg.jpg'
+import logo from '../assets/Logo.png'
 
 export default function NavBarComponent({ menuOpen, setMenuOpen }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const location = useLocation()
+  const navigate = useNavigate()
 
-  useEffect(() => {
-    const token = localStorage.getItem("userId");
-    setIsLoggedIn(!!token);
-  }, []);
+  useEffect(function() {
+    const token = localStorage.getItem('token')
+    setIsLoggedIn(!!token)
+  }, [location])
+
+  const navLinks = [
+    { to: '/', label: 'Home', icon: 'home-outline', always: true },
+    { to: '/eventpage', label: 'Eventi', icon: 'calendar-outline', always: true },
+    { to: '/favorite', label: 'Preferiti', icon: 'heart-outline', protected: true },
+    { to: '/contacts', label: 'Contatti', icon: 'mail-outline', always: true },
+    { to: isLoggedIn ? '/createevent' : '#', label: 'Crea Evento', icon: 'add-circle-outline', protected: true },
+  ]
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary fixed-top">
-      <Container id="navbarContainer" fluid>
-        <Navbar.Brand as={Link} to="/" className="d-flex align-items-center logoContainer">
-          <img id='Logo' src={logo} alt="ProvaLogo" />
-        </Navbar.Brand>
-        <Navbar.Toggle
-          aria-controls="basic-navbar-nav"
-          onClick={() => setMenuOpen(open => !open)}
-        />
-        <Navbar.Collapse
-          id="basic-navbar-nav"
-          className={menuOpen ? "show" : ""}
-        >
-          <Nav className="linkContainer">
-            <Nav.Link as={Link} to="/" className="nav-link-red">Home</Nav.Link>
-            <Nav.Link as={Link} to="/contacts" className="nav-link-red">Contacts</Nav.Link>
-            <Nav.Link as={Link} to="/favorite" className={`navLinkOrange ${!isLoggedIn ? "disabled-link" : ""}`}
-              onClick={(e) => {
-                if (!isLoggedIn) e.preventDefault(); // blocca il click se non loggato
-              }}>Favorite</Nav.Link>
-            {isLoggedIn ? (
-              <Nav.Link as={Link} to="/account" className="nav-link-red d-lg-none navLinkLogin">Account</Nav.Link>
-            ) : (
-              <Nav.Link as={Link} to="/login" className="nav-link-red d-lg-none navLinkLogin">Login</Nav.Link>
-            )}
-            <Nav.Link as={Link} to={isLoggedIn ? "/createevent" : "#"}
-              className={`nav-link-red navLinkCreateEvent ${!isLoggedIn ? "disabled-link" : ""}`}
-              onClick={(e) => {
-                if (!isLoggedIn) e.preventDefault(); // blocca il click se non loggato
-              }}
-            >Create Event</Nav.Link>
-          </Nav>
+    <>
+      {/* SIDEBAR DESKTOP */}
+      <aside className="sidebar">
+        <div className="sidebar-logo">
+          <Link to="/">
+            <img src={logo} alt="Logo" className="sidebar-logo-img" />
+          </Link>
+        </div>
 
-          <div className="loginUser d-none d-lg-flex">
-            <Link to={isLoggedIn ? "/account" : "/login"}>
-              <img
-                src={userImg}
-                alt="User Icon"
-                className="user-icon-img"
-                id="userImg"
-                style={{ cursor: 'pointer' }}
-              />
+        <nav className="sidebar-nav">
+          {navLinks.map(function(link) {
+            const isActive = location.pathname === link.to
+            const isDisabled = link.protected && !isLoggedIn
+            return (
+              <Link
+                key={link.to}
+                to={isDisabled ? '#' : link.to}
+                className={`sidebar-link ${isActive ? 'active' : ''} ${isDisabled ? 'disabled' : ''}`}
+                onClick={function(e) { if (isDisabled) e.preventDefault() }}
+              >
+                <ion-icon name={link.icon}></ion-icon>
+                <span>{link.label}</span>
+              </Link>
+            )
+          })}
+        </nav>
+
+        <div className="sidebar-bottom">
+          <Link to={isLoggedIn ? '/account' : '/login'} className="sidebar-user">
+            <ion-icon name="person-outline"></ion-icon>
+            <span>{isLoggedIn ? 'Account' : 'Login'}</span>
+          </Link>
+          {isLoggedIn && (
+            <button
+              className="sidebar-logout"
+              onClick={function() {
+                localStorage.removeItem('token')
+                localStorage.removeItem('nameUser')
+                navigate('/')
+              }}
+            >
+              <ion-icon name="log-out-outline"></ion-icon>
+              <span>Esci</span>
+            </button>
+          )}
+        </div>
+      </aside>
+
+      {/* TOP BAR MOBILE */}
+      <header className="mobile-header">
+        <Link to="/">
+          <img src={logo} alt="Logo" className="mobile-logo" />
+        </Link>
+        <button className="mobile-hamburger" onClick={function() { setMenuOpen(function(o) { return !o }) }}>
+          <ion-icon name={menuOpen ? 'close-outline' : 'menu-outline'}></ion-icon>
+        </button>
+      </header>
+
+      {/* MENU MOBILE OVERLAY */}
+      {menuOpen && (
+        <div className="mobile-menu-overlay" onClick={function() { setMenuOpen(false) }}>
+          <div className="mobile-menu" onClick={function(e) { e.stopPropagation() }}>
+            {navLinks.map(function(link) {
+              const isDisabled = link.protected && !isLoggedIn
+              return (
+                <Link
+                  key={link.to}
+                  to={isDisabled ? '#' : link.to}
+                  className={`mobile-menu-link ${isDisabled ? 'disabled' : ''}`}
+                  onClick={function(e) {
+                    if (isDisabled) { e.preventDefault(); return }
+                    setMenuOpen(false)
+                  }}
+                >
+                  <ion-icon name={link.icon}></ion-icon>
+                  <span>{link.label}</span>
+                </Link>
+              )
+            })}
+            <Link
+              to={isLoggedIn ? '/account' : '/login'}
+              className="mobile-menu-link"
+              onClick={function() { setMenuOpen(false) }}
+            >
+              <ion-icon name="person-outline"></ion-icon>
+              <span>{isLoggedIn ? 'Account' : 'Login'}</span>
             </Link>
+            {isLoggedIn && (
+              <button className="mobile-menu-link mobile-logout" onClick={function() {
+                localStorage.removeItem('token')
+                localStorage.removeItem('nameUser')
+                setMenuOpen(false)
+                navigate('/')
+              }}>
+                <ion-icon name="log-out-outline"></ion-icon>
+                <span>Esci</span>
+              </button>
+            )}
           </div>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+        </div>
+      )}
+    </>
   )
 }

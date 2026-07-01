@@ -1,46 +1,98 @@
-import React from 'react'
+/*
+ * FavoriteButtonComponent.jsx — Pulsante preferiti
+ * Al mount verifica dal backend se l'evento è già nei preferiti.
+ * Al click fa il toggle: aggiunge (PUT) o rimuove (DELETE).
+ */
+
+import React, { useState, useEffect } from 'react'
 import '../style/FavoriteButtonStyle.css'
 
-export default function FavoriteButtonComponent({ event, localFavoriteIds, setLocalFavoriteIds }) {
-  const handleAddFavorite = () => {
-    console.log('Bottone cliccato', event, localStorage.getItem("userId"));
-    if (event._id && localStorage.getItem("userId")) {
-      fetch(`http://localhost:3000/api/user/eventi/${event._id}/preferiti`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem("userId")}` },
-      }).then(res => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return res.json().then(errorData => { // Tenta di leggere il corpo dell'errore
-            throw new Error(errorData.message || 'Errore durante l\'aggiunta ai preferiti.');
-          });
-        }
-      }).then(data => {
-        alert('Evento aggiunto con successo ai preferiti!');
-      }).catch(error => {
-        alert(`Errore: ${error.message}`);
-        console.error('Errore durante la richiesta al backend:', error);
-      });
-    } else if (event.id) {
-      // Evento solo FE: aggiungi a localStorage
-      const safeLocalFavoriteIds = Array.isArray(localFavoriteIds) ? localFavoriteIds : []
-      if (!safeLocalFavoriteIds.includes(event.id)) {
-        const updated = [...safeLocalFavoriteIds, event.id]
-        if (typeof setLocalFavoriteIds === 'function') {
-          setLocalFavoriteIds(updated)
-        }
-        localStorage.setItem('localFavorites', JSON.stringify(updated))
-        alert('Aggiunto ai preferiti!')
-      } else {
-        alert('Evento già nei preferiti!')
+export default function FavoriteButtonComponent({ event, onRemove, favoriteIds }) {
+  const [isFavorited, setIsFavorited] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(function() {
+    // Se il componente padre ha già caricato i preferiti, usa quelli (evita N fetch identiche)
+    if (favoriteIds !== undefined) {
+      if (favoriteIds !== null) {
+        setIsFavorited(favoriteIds.has(event._id))
       }
+      return
     }
+
+    // Nessun favoriteIds passato (es. EventDetailPage): fetch individuale
+    const token = localStorage.getItem('token')
+    if (!token || !event._id) return
+
+    fetch(`${import.meta.env.VITE_API_URL}/api/user/eventsFavourites`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    })
+    .then(function(res) {
+      if (!res.ok) return null
+      return res.json()
+    })
+    .then(function(data) {
+      if (!data) return
+      const found = data.some(function(ev) { return ev._id === event._id })
+      setIsFavorited(found)
+    })
+    .catch(function() {})
+  }, [event._id, favoriteIds])
+
+  function handleToggleFavorite() {
+    const token = localStorage.getItem('token')
+
+    if (!token) {
+      alert('Devi essere loggato per aggiungere un evento ai preferiti.')
+      return
+    }
+
+    if (!event._id) return
+
+    setIsLoading(true)
+
+    const method = isFavorited ? 'DELETE' : 'PUT'
+
+    fetch(`${import.meta.env.VITE_API_URL}/api/user/eventi/${event._id}/preferiti`, {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(function(res) {
+      return res.json().then(function(data) {
+        if (res.status === 401) {
+          localStorage.removeItem('token')
+          alert('Sessione scaduta. Effettua di nuovo il login.')
+          return
+        }
+        if (res.ok) {
+          setIsFavorited(!isFavorited)
+          if (isFavorited && onRemove) onRemove(event._id)
+        } else {
+          alert(data.message || 'Errore. Riprova più tardi.')
+        }
+      })
+    })
+    .catch(function() {
+      alert('Errore di rete. Riprova più tardi.')
+    })
+    .finally(function() {
+      setIsLoading(false)
+    })
   }
 
   return (
-    <button className="favoriteButton" onClick={handleAddFavorite}>
-      <span className="favoriteButtonText" role="img" aria-label="heart">aggiungi ai tuoi preferiti ❤️</span>
+    <button
+      className="fav-btn"
+      onClick={handleToggleFavorite}
+      disabled={isLoading}
+      aria-label={isFavorited ? 'Rimuovi dai preferiti' : 'Aggiungi ai preferiti'}
+    >
+      <span className={`fav-icon-wrapper${isFavorited ? ' fav-icon-wrapper--active' : ''}`}>
+        <ion-icon name={isFavorited ? 'heart' : 'heart-outline'} class="fav-icon"></ion-icon>
+      </span>
     </button>
   )
 }
