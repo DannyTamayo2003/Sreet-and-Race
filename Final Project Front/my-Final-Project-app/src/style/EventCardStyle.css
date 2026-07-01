@@ -131,14 +131,16 @@
   }
 }
 
-/* Variante orizzontale — usata nei Preferiti */
+/* Variante orizzontale — usata nei Preferiti.
+   Su mobile resta una riga compatta, su desktop torna al formato
+   poster verticale (come le card normali) per sfruttare più spazio. */
 .ec-card--horizontal {
   flex-direction: row;
-  min-height: 110px;
+  min-height: 84px;
 }
 
 .ec-card--horizontal .ec-image-wrapper {
-  width: 110px;
+  width: 84px;
   aspect-ratio: auto;
   height: auto;
   flex-shrink: 0;
@@ -147,15 +149,65 @@
 .ec-card--horizontal .ec-body {
   flex: 1;
   justify-content: center;
+  padding: 8px 12px;
+  gap: 4px;
 }
 
-@media (max-width: 480px) {
+.ec-card--horizontal .ec-date-badge {
+  top: 6px;
+  left: 6px;
+  padding: 3px 6px;
+  min-width: 28px;
+}
+
+.ec-card--horizontal .ec-date-day {
+  font-size: 0.8rem;
+}
+
+.ec-card--horizontal .ec-date-month {
+  font-size: 0.45rem;
+}
+
+.ec-card--horizontal .ec-favorite {
+  top: 6px;
+  right: 6px;
+}
+
+@media (min-width: 601px) {
   .ec-card--horizontal {
     flex-direction: column;
+    min-height: 0;
   }
 
   .ec-card--horizontal .ec-image-wrapper {
     width: 100%;
-    aspect-ratio: 16/9;
+    aspect-ratio: 3/4;
+    height: auto;
+  }
+
+  .ec-card--horizontal .ec-body {
+    flex: none;
+    justify-content: flex-start;
+    padding: 12px 14px 14px;
+  }
+
+  .ec-card--horizontal .ec-date-badge {
+    top: 10px;
+    left: 10px;
+    padding: 5px 9px;
+    min-width: 40px;
+  }
+
+  .ec-card--horizontal .ec-date-day {
+    font-size: 1rem;
+  }
+
+  .ec-card--horizontal .ec-date-month {
+    font-size: 0.55rem;
+  }
+
+  .ec-card--horizontal .ec-favorite {
+    top: 10px;
+    right: 10px;
   }
 }

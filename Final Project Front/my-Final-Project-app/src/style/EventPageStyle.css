@@ -156,10 +156,11 @@
   font-size: 0.95rem;
 }
 
-/* Griglia card stile Instagram */
+/* Griglia card stile Instagram — auto-fit per partire sempre dal centro */
 .eventListFlex {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(230px, 270px));
+  justify-content: center;
   gap: 14px;
   padding: 24px 32px;
   max-width: 1200px;
@@ -251,7 +252,8 @@
 
 @media (max-width: 991px) {
   .eventListFlex {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 260px));
+    justify-content: center;
     gap: 12px;
     padding: 16px 20px;
   }
@@ -259,7 +261,8 @@
 
 @media (max-width: 600px) {
   .eventListFlex {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(140px, 200px));
+    justify-content: center;
     gap: 10px;
     padding: 12px 14px;
   }
@@ -267,7 +270,8 @@
 
 @media (max-width: 380px) {
   .eventListFlex {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    justify-content: center;
     gap: 12px;
     padding: 12px 20px;
   }
