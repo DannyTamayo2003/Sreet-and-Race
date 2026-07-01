@@ -24,8 +24,8 @@ Final-Project/
     └── src/
         ├── components/   EventListComponent, EventCardComponent, DetailButtonComponent,
         │                 FavoriteButtonComponent, NavBarComponent, CreateEvent,
-        │                 LoginUserComponent, RegistrationComponent, LogOutComponent,
-        │                 FeaturedCardComponent, FiltersComponent, EventDetailComponent
+        │                 LoginUserComponent, RegistrationComponent
+        ├── data/         cittaPerRegione.js (mappa regione → array città)
         ├── router-dom-page/  HomePage (landing page), EventPage, EventDetailPage,
         │                     FavoriteEventPage, LoginUserPage, RegistrationPage,
         │                     CreateEventPage, EditEventPage, AccountPage, ContactsPage,
