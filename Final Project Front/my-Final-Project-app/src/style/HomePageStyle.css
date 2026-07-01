@@ -294,7 +294,7 @@
     gap: 12px;
   }
   .how-card {
-    min-height: 220px;
+    min-height: 240px;
   }
   .how-card-overlay {
     padding: 20px 16px;
@@ -308,13 +308,13 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 360px) {
   .how-cards-row {
     grid-template-columns: 1fr;
     gap: 10px;
   }
   .how-card {
-    min-height: 160px;
+    min-height: 200px;
   }
 }
 
