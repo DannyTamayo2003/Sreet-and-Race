@@ -33,7 +33,7 @@
 
 .account-avatar {
   font-size: 3.5rem;
-  color: #7B2FFF;
+  color: #ff00e6;
   flex-shrink: 0;
 }
 
@@ -77,7 +77,7 @@
 
 .account-info-row ion-icon {
   font-size: 1.2rem;
-  color: #7B2FFF;
+  color: #ff00e6;
   min-width: 20px;
 }
 
@@ -104,7 +104,7 @@
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #7B2FFF;
+  color: #ff00e6;
   margin: 0 0 16px 0;
   text-shadow: none;
 }
@@ -146,7 +146,7 @@
 }
 
 .account-event-item:hover {
-  border-color: #7B2FFF;
+  border-color: #ff00e6;
 }
 
 .account-event-thumb {
@@ -203,12 +203,12 @@
 }
 
 .account-btn-edit {
-  background: #7B2FFF;
+  background: #ff00e6;
   color: #ffffff;
 }
 .account-btn-edit:hover {
-  background: #9b5fff;
-  box-shadow: 0 2px 12px rgba(123, 47, 255, 0.4);
+  background: #ff44ee;
+  box-shadow: 0 2px 12px rgba(255, 0, 230, 0.4);
 }
 
 .account-btn-delete {
