@@ -183,6 +183,11 @@
   font-family: Arial, sans-serif;
   letter-spacing: 0;
 }
+.ed-info-value--sub {
+  font-size: 0.78rem;
+  color: #888888;
+  margin-top: 2px;
+}
 
 /* ========================
    DATE BADGE (hero)

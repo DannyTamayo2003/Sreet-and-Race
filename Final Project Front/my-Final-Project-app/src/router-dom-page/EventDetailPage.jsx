@@ -119,12 +119,13 @@ export default function EventDetailPage() {
                 </div>
               </div>
             )}
-            {event.location && (
+            {(event.location || event.via) && (
               <div className="ed-info-row">
                 <ion-icon name="location-outline"></ion-icon>
                 <div>
                   <div className="ed-info-label">Luogo</div>
-                  <div className="ed-info-value">{event.location}</div>
+                  {event.via && <div className="ed-info-value">{event.via}</div>}
+                  {event.location && <div className="ed-info-value ed-info-value--sub">{event.location}</div>}
                 </div>
               </div>
             )}
