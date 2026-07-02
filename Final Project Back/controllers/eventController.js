@@ -9,6 +9,7 @@ const Utente = require('../models/user.js');
 const { cloudinary } = require('../config/cloudinary.js');
 const { validationResult } = require('express-validator');
 const { extractPublicId } = require('../utils/cloudinaryUtils.js');
+const { moderateUploadedImage } = require('../utils/moderationUtils.js');
 
 // CREA EVENTO: salva un nuovo evento nel database
 exports.createEvento = async function(req, res) {
@@ -22,6 +23,18 @@ exports.createEvento = async function(req, res) {
   }
 
   try {
+    // Controlla il contenuto dell'immagine prima di salvare l'evento: se non idonea,
+    // moderateUploadedImage ha già eliminato l'asset da Cloudinary
+    if (req.file) {
+      const moderazione = await moderateUploadedImage(req.file);
+      if (!moderazione.approved) {
+        const message = moderazione.reason === 'error'
+          ? 'Impossibile verificare l\'immagine in questo momento. Riprova più tardi.'
+          : 'Immagine non consentita: contenuto non idoneo rilevato. Carica un\'altra immagine.';
+        return res.status(422).json({ message });
+      }
+    }
+
     const datiEvento = { ...req.body };
 
     // Se multer ha ricevuto un file immagine, usa l'URL pubblico restituito da Cloudinary
@@ -70,6 +83,17 @@ exports.updateEvento = async function(req, res) {
     });
 
     if (req.file) {
+      // Controlla il contenuto della nuova immagine PRIMA di toccare quella vecchia:
+      // se viene rifiutata, l'evento e l'immagine precedente restano intatti
+      // (l'asset appena rifiutato è già stato eliminato da moderateUploadedImage)
+      const moderazione = await moderateUploadedImage(req.file);
+      if (!moderazione.approved) {
+        const message = moderazione.reason === 'error'
+          ? 'Impossibile verificare l\'immagine in questo momento. Riprova più tardi.'
+          : 'Immagine non consentita: contenuto non idoneo rilevato. Carica un\'altra immagine.';
+        return res.status(422).json({ message });
+      }
+
       // Se l'evento aveva già un'immagine su Cloudinary, la elimina prima di salvare la nuova
       if (evento.image) {
         await cloudinary.uploader.destroy(extractPublicId(evento.image));
