@@ -16,11 +16,9 @@ provarla direttamente dal link sopra.
 
 ![Homepage desktop](assets/demo/desktop-home.jpeg)
 
-**Video demo (mobile):**
+**Screenshot (mobile):**
 
-![Demo mobile](assets/demo/mobile-demo.mov)
-
-> Se il video non viene riprodotto inline, [scaricalo/aprilo qui](assets/demo/mobile-demo.mov).
+![Homepage mobile](assets/demo/mobile-home.jpeg)
 
 ## 🎯 Funzionalità (Attuali)
 - ✅ **Autenticazione Utente** - Registrazione, login/logout con token JWT, rate limiting sui tentativi di login
